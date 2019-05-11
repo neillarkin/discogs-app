@@ -1,33 +1,25 @@
-function artistInformationHTML(artistData) {
-    // console.log(artistData.members[0]);
-    // console.log(Object.keys(artistData));
-    
-    Object.keys(artistData).forEach(function(key) {
-        console.log(artistData[key])
-
-    });
-    
+function artistInformationHTML(artist) {
     return `
-        <h3>${artistData.name}
+        <h3>${artist.name}
             <span class="small-name">
-                (<a href="${artistData.uri}" target="_blank">${artistData.name}</a>)
+                (@<a href="${artist.html_url}" target="_blank">${artist.namevariations}</a>)
             </span>
         </h3>
         <div class="dc-content">
             <div class="dc-avatar">
-                <a href="${artistData.url}" target="_blank">
-                    <img src="${artistData.uri}" width="80" height="80" />
+                <a href="${artist.url}" target="_blank">
+                    <img src="${artist.images}" width="80" height="80" alt="${artist.resource_url}" />
                 </a>
             </div>
-             <p>Members: ${artistData.members['name']} <br> <a href="${artistData.releases_url}">Releases</a></p>
+             <p>Members: ${artist.members} <br> Repos: ${artist.releases_url}</p>
         </div>`;
 }
 
 // 11770
 
 function fetchDiscogsData(event) {
-     var artist = "11770";
-    // var artist = $("#dc-artistname").val();
+//  var artist = 11770;
+    var artist = $("#dc-artistname").val();
     if (!artist) {
         $("#dc-artist-data").html(`<h3>Enter an Artist</h3>`);
         return;
@@ -38,7 +30,7 @@ function fetchDiscogsData(event) {
             <img src="imgs/loader.gif" alt="loading..." />
         </div>`);
     $.when(
-        $.getJSON(`https://api.discogs.com/artists/${artist}`)
+        $.getJSON(`https://api.discogs.com/artists/${artist}/releases`)
     ).then(
         function(response) {
             var artistData = response;
