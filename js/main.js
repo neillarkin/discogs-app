@@ -1,6 +1,19 @@
 function artistInformationHTML(artistData) {
-
     artistData = artistData.results[0];
+    var artistURL = artistData.resource_url;
+    var artistDetails;
+
+    $.when(
+        $.getJSON(artistURL)
+    ).done(function(data) {
+        artistDetails = data;
+          console.log(artistDetails);
+    });
+
+
+
+    // artistDetails = artistDetails.members;
+    //   <button onclick="writeToDocument('https:   //api.discogs.com/artists/${artistData.id}/releases')">Releases</button>  
     // console.log(artistData.id);
     // console.log(artistData[0]);
     // Object.keys(artistData).forEach(function(key) {
@@ -8,40 +21,45 @@ function artistInformationHTML(artistData) {
     //          console.log(Object.keys(artistData));
     // });
 
-    return `
-      <h3>${artistData.id}
+    // console.log(artistData.id);
 
-        </h3>
-      <h3>${artistData.title}
-        </h3>
-      
-        
+    return `
+    
+      <img src="${artistData.thumb}" width="80" height="80" />
+      <h3>${artistData.title}</h3>
+        <h3>${artistDetails}</h3>
+ 
         
         `;
 }
 
 // 11770
 // https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox
+// https://api.discogs.com/artists/69866
 
 function fetchDiscogsData(event) {
     //  var artist = "11770";
-    var artist = $("#dc-artistname").val();
+    var artist = $("#dc-artist-inputbox").val();
     if (!artist) {
         $("#dc-artist-data").html(`<h3>Enter an Artist</h3>`);
         return;
     }
-    
-    // curl "https://api.discogs.com/database/search?q=Nirvana&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox"
-    $("#dc-artist-data").html(
-        `<div id="loader">
-            <img src="imgs/loader.gif" alt="loading..." />
-        </div>`);
+
+    $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
+
     $.when(
         $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`)
+
     ).then(
         function(response) {
             var artistData = response;
+
+
+            //   $.getJSON(`https://api.discogs.com/artists/${artistID}`)
+
+
             $("#dc-artist-data").html(artistInformationHTML(artistData));
+
         },
         function(errorResponse) {
             if (errorResponse.status === 404) {
