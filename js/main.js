@@ -1,16 +1,27 @@
+var artistDetails;
+
+function getArtistDetails(artistURL) {
+    //  var artistDetails;
+
+    $.when(
+            $.getJSON(artistURL))
+        .done(
+            function(data) {
+                artistDetails = data;
+                return artistDetails;
+            });
+    // return artistDetails;
+
+}
+
+
+
 function artistInformationHTML(artistData) {
     artistData = artistData.results[0];
     var artistURL = artistData.resource_url;
-    var artistDetails;
 
-    $.when(
-        $.getJSON(artistURL)
-    ).done(function(data) {
-        artistDetails = data;
-          console.log(artistDetails);
-    });
-
-
+    getArtistDetails(artistURL);
+    console.log(artistDetails);
 
     // artistDetails = artistDetails.members;
     //   <button onclick="writeToDocument('https:   //api.discogs.com/artists/${artistData.id}/releases')">Releases</button>  
@@ -27,8 +38,9 @@ function artistInformationHTML(artistData) {
     
       <img src="${artistData.thumb}" width="80" height="80" />
       <h3>${artistData.title}</h3>
-        <h3>${artistDetails}</h3>
- 
+        <p>${artistDetails.profile}</p>
+        <p>Name variations: ${artistDetails.namevariations}</p>
+         <p>Artist URLs: ${artistDetails.urls}</p>
         
         `;
 }
@@ -36,6 +48,10 @@ function artistInformationHTML(artistData) {
 // 11770
 // https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox
 // https://api.discogs.com/artists/69866
+
+
+
+
 
 function fetchDiscogsData(event) {
     //  var artist = "11770";
