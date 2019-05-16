@@ -1,56 +1,34 @@
-var artistDetails;
-
-function getArtistDetails(artistURL) {
-    //  var artistDetails;
-
-    $.when(
-            $.getJSON(artistURL))
-        .done(
-            function(data) {
-                artistDetails = data;
-                return artistDetails;
-            });
-    // return artistDetails;
-
-}
-
-
-
-function artistInformationHTML(artistData) {
+function displayArtistInfo(artistData) {
     artistData = artistData.results[0];
-    var artistURL = artistData.resource_url;
-
-    getArtistDetails(artistURL);
-    console.log(artistDetails);
-
-    // artistDetails = artistDetails.members;
-    //   <button onclick="writeToDocument('https:   //api.discogs.com/artists/${artistData.id}/releases')">Releases</button>  
-    // console.log(artistData.id);
-    // console.log(artistData[0]);
-    // Object.keys(artistData).forEach(function(key) {
-    //         console.log(artistData.releases_url);
-    //          console.log(Object.keys(artistData));
-    // });
-
-    // console.log(artistData.id);
+    // var artistURL = artistData.resource_url;
 
     return `
     
       <img src="${artistData.thumb}" width="80" height="80" />
       <h3>${artistData.title}</h3>
-        <p>${artistDetails.profile}</p>
-        <p>Name variations: ${artistDetails.namevariations}</p>
-         <p>Artist URLs: ${artistDetails.urls}</p>
-        
+
         `;
 }
 
-// 11770
-// https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox
-// https://api.discogs.com/artists/69866
+function displayArtistDetails(details) {
 
+    var members = details.members;
+    if (members.length == 0) {
+        return `<div class="clearfix members-list">No members list!</div>`;
+    }
 
+    var membersHTML = [];
+    members.forEach(function(key) {
+        membersHTML.push(`<li>&nbsp${key.name}</li>`);
+    });
+  
+    return `
+        <p>${details.profile}</p>
+        <p>Name variations: ${details.namevariations}</p>
+        Members: <ul id="members-list">${membersHTML}</ul>
+    `;
 
+}
 
 
 function fetchDiscogsData(event) {
@@ -64,17 +42,43 @@ function fetchDiscogsData(event) {
     $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
 
     $.when(
-        $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`)
+        $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`),
+  
 
     ).then(
         function(response) {
             var artistData = response;
+            var artistURL = artistData.results[0].resource_url;
 
+            $("#dc-artist-data").html(displayArtistInfo(artistData));
+
+            $.when($.getJSON(artistURL)).then(
+                function(response2) {
+                    var artistDetails = response2;
+                    $("#dc-artist-details").html(displayArtistDetails(artistDetails));
+                }
+            );
+
+
+            // JSON.parse(artistDetails.responseText);
+
+
+
+            //     function(){
+            //         if (this.readyState == 4 && this.status == 200) {
+            //              JSON.parse(this.responseText);
+            //             //  getArtistDetails(artistDetails);
+            //             // return this;
+            //             // document.getElementById("data").innerHTML = this.responseText;
+            //             //   console.log(this);
+            // }
+            //     });
+            // console.log(artistDetails);
 
             //   $.getJSON(`https://api.discogs.com/artists/${artistID}`)
 
 
-            $("#dc-artist-data").html(artistInformationHTML(artistData));
+
 
         },
         function(errorResponse) {
@@ -88,4 +92,4 @@ function fetchDiscogsData(event) {
                     `<h3>Error: ${errorResponse.responseJSON.message}</h3>`);
             }
         });
-}
+};
