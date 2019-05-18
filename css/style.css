@@ -1,3 +1,4 @@
 ul#members-list li{
     display:inline;
+  float:left;
 }

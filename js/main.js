@@ -1,38 +1,55 @@
 function displayArtistInfo(artistData) {
     artistData = artistData.results[0];
-    // var artistURL = artistData.resource_url;
-
     return `
-    
       <img src="${artistData.thumb}" width="80" height="80" />
       <h3>${artistData.title}</h3>
-
         `;
 }
 
 function displayArtistDetails(details) {
-
     var members = details.members;
-    if (members.length == 0) {
-        return `<div class="clearfix members-list">No members list!</div>`;
-    }
+    var social = details.urls;
+    var artistName = details.name;
+    // if (members.length == 0) {
+    //     return `<div class="clearfix members-list">No members list!</div>`;
+    // }
 
     var membersHTML = [];
+    var exMembersHTML = [];
     members.forEach(function(key) {
-        membersHTML.push(`<li>&nbsp${key.name}</li>`);
+        if (key.active) {
+            membersHTML.push(`<li>${key.name}&nbsp</li>`);
+        }
+        else if (!(key.active)) {
+            exMembersHTML.push(`<li>${key.name}</li>`);
+        }
+        else {
+            exMembersHTML.push(`<li>No ex members yet!</li>`);
+        }
     });
-  
+
+    // str.indexOf(searchValue)
+    var socialMediaHTML = [];
+    var myURLs = [];
+
+    social.forEach(function(key) {
+        if (key.indexOf("facebook.com") > -1) {
+            myURLs.push(key);
+        }
+    })
+
+    var firstURL = myURLs.shift();
     return `
         <p>${details.profile}</p>
-        <p>Name variations: ${details.namevariations}</p>
+        <p>Name variations: <br>${details.namevariations}</p>
         Members: <ul id="members-list">${membersHTML}</ul>
+        Ex-Members: <ul id="members-list">${exMembersHTML}</ul>
+        Social: <p>${firstURL}</p>
     `;
-
 }
 
 
 function fetchDiscogsData(event) {
-    //  var artist = "11770";
     var artist = $("#dc-artist-inputbox").val();
     if (!artist) {
         $("#dc-artist-data").html(`<h3>Enter an Artist</h3>`);
@@ -43,13 +60,10 @@ function fetchDiscogsData(event) {
 
     $.when(
         $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`),
-  
-
     ).then(
         function(response) {
             var artistData = response;
             var artistURL = artistData.results[0].resource_url;
-
             $("#dc-artist-data").html(displayArtistInfo(artistData));
 
             $.when($.getJSON(artistURL)).then(
@@ -58,28 +72,6 @@ function fetchDiscogsData(event) {
                     $("#dc-artist-details").html(displayArtistDetails(artistDetails));
                 }
             );
-
-
-            // JSON.parse(artistDetails.responseText);
-
-
-
-            //     function(){
-            //         if (this.readyState == 4 && this.status == 200) {
-            //              JSON.parse(this.responseText);
-            //             //  getArtistDetails(artistDetails);
-            //             // return this;
-            //             // document.getElementById("data").innerHTML = this.responseText;
-            //             //   console.log(this);
-            // }
-            //     });
-            // console.log(artistDetails);
-
-            //   $.getJSON(`https://api.discogs.com/artists/${artistID}`)
-
-
-
-
         },
         function(errorResponse) {
             if (errorResponse.status === 404) {
