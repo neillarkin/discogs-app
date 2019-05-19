@@ -1,4 +1,4 @@
-ul#members-list li{
+ul li{
     display:inline;
-  float:left;
+   list-style-type: none;
 }

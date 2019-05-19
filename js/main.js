@@ -6,6 +6,9 @@ function displayArtistInfo(artistData) {
         `;
 }
 
+var exMembersHTML = [""];
+var membersHTML = [];
+
 function displayArtistDetails(details) {
     var members = details.members;
     var social = details.urls;
@@ -14,39 +17,48 @@ function displayArtistDetails(details) {
     //     return `<div class="clearfix members-list">No members list!</div>`;
     // }
 
-    var membersHTML = [];
-    var exMembersHTML = [];
+
+    exMembersHTML = ["No ex-members"];
     members.forEach(function(key) {
         if (key.active) {
-            membersHTML.push(`<li>${key.name}&nbsp</li>`);
+            membersHTML.push(`<li>&nbsp${key.name}</li>`);
         }
         else if (!(key.active)) {
-            exMembersHTML.push(`<li>${key.name}</li>`);
-        }
-        else {
-            exMembersHTML.push(`<li>No ex members yet!</li>`);
+            exMembersHTML.push(`<li>&nbsp${key.name}</li>`);
         }
     });
 
-    // str.indexOf(searchValue)
-    var socialMediaHTML = [];
-    var myURLs = [];
+    var fbURLs = [];
+    var twitURLs = [];
 
     social.forEach(function(key) {
         if (key.indexOf("facebook.com") > -1) {
-            myURLs.push(key);
+            fbURLs.push(key);
         }
     })
 
-    var firstURL = myURLs.shift();
+    social.forEach(function(key) {
+        if (key.indexOf("twitter.com") > -1) {
+            twitURLs.push(key);
+        }
+    })
+
+    var firstFbURL = fbURLs.shift();
+    var firstTwitURL = twitURLs.shift();
+
     return `
         <p>${details.profile}</p>
-        <p>Name variations: <br>${details.namevariations}</p>
-        Members: <ul id="members-list">${membersHTML}</ul>
-        Ex-Members: <ul id="members-list">${exMembersHTML}</ul>
-        Social: <p>${firstURL}</p>
+        Name variations: <ul>${details.namevariations}</ul>
+        Members: <ul>${membersHTML}</ul>
+        Ex-Members: <ul>${exMembersHTML}</ul>
+        
+        <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
+            <li><a target="_blank" href="${firstTwitURL}"><i class="fab fa-twitter-square fa-2x"></i><a></li>
+      </ul>
+      
     `;
 }
+
 
 
 function fetchDiscogsData(event) {
