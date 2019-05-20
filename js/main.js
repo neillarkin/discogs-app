@@ -6,8 +6,7 @@ function displayArtistInfo(artistData) {
         `;
 }
 
-var exMembersHTML = [""];
-var membersHTML = [];
+
 
 function displayArtistDetails(details) {
     var members = details.members;
@@ -18,13 +17,19 @@ function displayArtistDetails(details) {
     // }
 
 
-    exMembersHTML = ["No ex-members"];
+    var exMembersHTML = ["No ex-members"];
+    var membersHTML = [];
     members.forEach(function(key) {
         if (key.active) {
             membersHTML.push(`<li>&nbsp${key.name}</li>`);
         }
         else if (!(key.active)) {
+         var instance = exMembersHTML.indexOf("No ex-members")
+            if (instance > -1) {
+                exMembersHTML.splice(instance, 1);
+            }
             exMembersHTML.push(`<li>&nbsp${key.name}</li>`);
+
         }
     });
 
@@ -51,8 +56,7 @@ function displayArtistDetails(details) {
         Name variations: <ul>${details.namevariations}</ul>
         Members: <ul>${membersHTML}</ul>
         Ex-Members: <ul>${exMembersHTML}</ul>
-        
-        <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
+        Social: <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
             <li><a target="_blank" href="${firstTwitURL}"><i class="fab fa-twitter-square fa-2x"></i><a></li>
       </ul>
       
