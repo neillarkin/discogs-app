@@ -54,7 +54,7 @@ function displayArtistDetails(details) {
 
     return `
         <p>${details.profile}</p>
-        <h5>Name variations:</h5> <ul>${details.namevariations}</ul>
+        <h5>Name variations:</h5> <ul><li>&nbsp${details.namevariations}</li></ul>
         <h5>Members:</h5><ul>${membersHTML}</ul>
         <h5>Ex-Members:</h5> <ul>${exMembersHTML}</ul>
         <h5>Social:</h5> <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
