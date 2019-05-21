@@ -12,7 +12,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <script type="text/javascript" src="js/main.js"></script>
-    <!--<script type="text/javascript" src="js/table.js"></script>-->
+    <script type="text/javascript" src="js/releases.js"></script>
     <title>Dicogs demo app</title>
 </head>
 
@@ -33,7 +33,7 @@
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" onsubmit="return fetchDiscogsData(this)" method="GET">
-                    <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="" oninput="fetchDiscogsData()" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="abba" oninput="fetchDiscogsData()" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" id="dc-artist-searchbox" type="submit">Search</button>
                 </form>
             </div>
@@ -44,7 +44,9 @@
 
         <div id="dc-artist-data"></div>
         <div id="dc-artist-details"></div>
-   
+     
+          <button onclick="getURL()">Releases</button>
+        <div id="data"></div>
     </section>
 
     <footer class="container-fluid">

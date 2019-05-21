@@ -1,8 +1,10 @@
+var releases_url;
+
 function displayArtistInfo(artistData) {
     artistData = artistData.results[0];
     return `
-      <img src="${artistData.thumb}" width="80" height="80" />
-      <h3>${artistData.title}</h3>
+      <img src="${artistData.thumb}" width="120" height="120" />
+      <h2>${artistData.title}</h2>
         `;
 }
 
@@ -11,7 +13,6 @@ function displayArtistInfo(artistData) {
 function displayArtistDetails(details) {
     var members = details.members;
     var social = details.urls;
-    var artistName = details.name;
     // if (members.length == 0) {
     //     return `<div class="clearfix members-list">No members list!</div>`;
     // }
@@ -24,7 +25,7 @@ function displayArtistDetails(details) {
             membersHTML.push(`<li>&nbsp${key.name}</li>`);
         }
         else if (!(key.active)) {
-         var instance = exMembersHTML.indexOf("No ex-members")
+            var instance = exMembersHTML.indexOf("No ex-members")
             if (instance > -1) {
                 exMembersHTML.splice(instance, 1);
             }
@@ -53,10 +54,10 @@ function displayArtistDetails(details) {
 
     return `
         <p>${details.profile}</p>
-        Name variations: <ul>${details.namevariations}</ul>
-        Members: <ul>${membersHTML}</ul>
-        Ex-Members: <ul>${exMembersHTML}</ul>
-        Social: <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
+        <h5>Name variations:</h5> <ul>${details.namevariations}</ul>
+        <h5>Members:</h5><ul>${membersHTML}</ul>
+        <h5>Ex-Members:</h5> <ul>${exMembersHTML}</ul>
+        <h5>Social:</h5> <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
             <li><a target="_blank" href="${firstTwitURL}"><i class="fab fa-twitter-square fa-2x"></i><a></li>
       </ul>
       
@@ -66,6 +67,10 @@ function displayArtistDetails(details) {
 
 
 function fetchDiscogsData(event) {
+
+    $("#dc-artist-data").html("");
+    $("#dc-artist-details").html("");
+
     var artist = $("#dc-artist-inputbox").val();
     if (!artist) {
         $("#dc-artist-data").html(`<h3>Enter an Artist</h3>`);
@@ -85,6 +90,7 @@ function fetchDiscogsData(event) {
             $.when($.getJSON(artistURL)).then(
                 function(response2) {
                     var artistDetails = response2;
+                    releases_url = response2.releases_url
                     $("#dc-artist-details").html(displayArtistDetails(artistDetails));
                 }
             );
@@ -101,3 +107,6 @@ function fetchDiscogsData(event) {
             }
         });
 };
+
+
+$(document).ready(fetchDiscogsData);
