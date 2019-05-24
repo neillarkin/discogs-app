@@ -19,10 +19,18 @@ function getTableHeaders(obj) {
     var tableHeaders = [];
 
     Object.keys(obj).forEach(function(key) {
-        tableHeaders.push(`<td>${key}</td>`);
+        tableHeaders.push(`<th>${key}</th>`);
     });
+
+
+    if (tableHeaders[0] === "<th>stats</th>") {
+        tableHeaders.unshift("<th>Status</th>");
+
+    }
+
+
     // let myHeader = tableHeaders.shift(tableHeaders.shift());
-    return `<tr class="text-uppercase">${tableHeaders}</tr>`;
+    return `<thead><tr class="text-uppercase">${tableHeaders}</tr></thead>`;
 
 }
 
@@ -44,6 +52,7 @@ function writeToDocument(url) {
 
     var tableRows = [];
     var el = document.getElementById("data");
+    $("#data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
 
     getData(url, function(data) {
         var pagination = "";
@@ -63,7 +72,7 @@ function writeToDocument(url) {
                 }
 
                 var rowData = item[key].toString();
-                var truncatedData = rowData.substring(0, 50);
+                var truncatedData = rowData.substring(0, 40);
 
                 dataRow.push(`<td>${truncatedData}</td>`);
             });
@@ -72,8 +81,10 @@ function writeToDocument(url) {
             tableRows.push(`<tr>${dataRow}</tr>`);
 
         });
+
         el.innerHTML = `<table class="table-light table-striped" id="table-releases">${tableHeaders}${tableRows}</table>${pagination}`.replace(/,/g, "");;
-        removeColumns();
+        // removeColumns();
+        cleanColumns();
 
     });
 
@@ -83,24 +94,33 @@ function writeToDocument(url) {
 // 0 1 2 6 8 10
 
 
+function cleanColumns() {
 
-function statusCol() { $('table tr').find('td:eq(0),th:eq(0)').remove(); };
+    $.moveColumn = function(table, from, to) {
+        var rows = $('tr', table);
+        var cols;
+        rows.each(function() {
+            cols = $(this).children('th, td');
+            cols.eq(from).detach().insertBefore(cols.eq(to));
+        });
+    }
 
-function statsCol() { $('table tr').find('td:eq(0),th:eq(0)').remove(); };
+    var tbl = $('table');
+    $.moveColumn(tbl, 9, 0);
+    $.moveColumn(tbl, 5, 1);
+    $.moveColumn(tbl, 8, 2);
+    $.moveColumn(tbl, 6, 3);
+    $.moveColumn(tbl, 7, 4);
 
-function thumbCol() { $('table tr').find('td:eq(0),th:eq(0)').remove(); };
+    // tbl = $('table tr');
+    var tbl2 = $('table tr');
 
-function roleCol() { $('table tr').find('td:eq(3),th:eq(3)').remove(); };
+    tbl2.find('td:eq(11),th:eq(11)').remove();
+    tbl2.find('td:eq(10),th:eq(10)').remove();
+    tbl2.find('td:eq(9),th:eq(9)').remove();
+    tbl2.find('td:eq(8),th:eq(8)').remove();
+    tbl2.find('td:eq(7),th:eq(7)').remove();
+    tbl2.find('td:eq(6),th:eq(6)').remove();
+    tbl2.find('td:eq(5),th:eq(5)').remove();
 
-function resourceCol() { $('table tr').find('td:eq(4),th:eq(4)').remove(); };
-
-function typeCol() { $('table tr').find('td:eq(5),th:eq(5)').remove(); };
-
-function removeColumns() {
-    statusCol();
-    statsCol();
-    thumbCol();
-    roleCol();
-    resourceCol();
-    typeCol();
 }

@@ -106,6 +106,7 @@ function fetchDiscogsData(event) {
                     `<h3>Error: ${errorResponse.responseJSON.message}</h3>`);
             }
         });
+        
 };
 
 
