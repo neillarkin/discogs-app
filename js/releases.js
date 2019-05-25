@@ -23,10 +23,13 @@ function getTableHeaders(obj) {
     });
 
 
-    if (tableHeaders[0] === "<th>stats</th>") {
-        tableHeaders.unshift("<th>Status</th>");
-
-    }
+    // if (tableHeaders[0] === "<th>stats</th>") {
+    //     tableHeaders.unshift("<th>Status</th>");
+    // }
+    // if (tableHeaders[3] === "<th>title</th>") {
+    //     tableHeaders.splice(3, 0, "<th>Format</th>");
+    //     console.log(tableHeaders);
+    // }
 
 
     // let myHeader = tableHeaders.shift(tableHeaders.shift());
@@ -62,14 +65,44 @@ function writeToDocument(url) {
         }
 
         data = data.releases;
-        var tableHeaders = getTableHeaders(data[1]);
 
         data.forEach(function(item) {
+
+            // delete item['status', 'stats', 'thumb', 'main_release', 'role', 'resource_url', 'type', 'id'];
+
+            delete item.status;
+            delete item.stats;
+            delete item.thumb;
+            delete item.main_release;
+            delete item.role;
+            delete item.resource_url;
+            delete item.type;
+            delete item.id;
+
+            if (item.format === undefined) {
+                item.format = "No format";
+            }
+            if (item.label === undefined) {
+                item.label = "No label";
+            }
+
+            console.log(item);
+
+            // console.log(item['stats']);
             var dataRow = [];
             Object.keys(item).forEach(function(key) {
-                if (item.status === undefined) {
-                    return this;
-                }
+
+                // if (item.format === undefined) {
+                //     return "#";
+                // }
+                // if (item.label === undefined) {
+                //     return "#";
+                // }
+
+                // if (item.status === undefined) {
+                //     return "accepted";
+                // }
+
 
                 var rowData = item[key].toString();
                 var truncatedData = rowData.substring(0, 40);
@@ -81,10 +114,11 @@ function writeToDocument(url) {
             tableRows.push(`<tr>${dataRow}</tr>`);
 
         });
+        var tableHeaders = getTableHeaders(data[0]);
 
         el.innerHTML = `<table class="table-light table-striped" id="table-releases">${tableHeaders}${tableRows}</table>${pagination}`.replace(/,/g, "");;
         // removeColumns();
-        cleanColumns();
+        // cleanColumns();
 
     });
 
