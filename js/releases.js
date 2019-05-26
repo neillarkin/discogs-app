@@ -5,6 +5,10 @@ function getData(url, cb) {
         if (this.readyState == 4 && this.status == 200) {
             cb(JSON.parse(this.responseText));
         }
+        else if (this.status === 404) {
+            $("#dc-artist-data").html(
+                `<h5>Search for an artist... </h5>`);
+        }
     };
 
     xhr.open("GET", url);
@@ -21,8 +25,12 @@ function getTableHeaders(obj) {
     // console.log(obj);
 
     Object.keys(obj).forEach(function(key) {
-
-        tableHeaders.push(`<th>${key}</th>`);
+        // obj.thumb=="#";
+        if (key == "thumb") {
+            tableHeaders.push(`<th>&nbsp</th>`);
+        }else{
+            tableHeaders.push(`<th>${key}</th>`);
+        }
     });
 
     return `<thead><tr class="text-uppercase">${tableHeaders}</tr></thead>`;
@@ -43,7 +51,10 @@ function generatePaginationButtons(next, prev) {
     }
 }
 
-function Record(artist, title, year, format, label) {
+function Record(thumb, artist, title, year, format, label) {
+
+    // this.thumb = `<img src="./imgs/small-vinyl-record-mark.png">`;
+    this.thumb = thumb;
     this.artist = artist;
     this.title = title;
     this.year = year;
@@ -57,7 +68,8 @@ function writeToDocument(url) {
     var tableRows = [];
     var cleanData = [{}];
     var el = document.getElementById("data");
-    $("#data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
+    // $("#data").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
+
 
     getData(url, function(data) {
         var pagination = "";
@@ -69,15 +81,28 @@ function writeToDocument(url) {
         data = data.releases;
 
         data.forEach(function(record) {
-            var rec = new Record(record.artist, record.title, record.year, record.format, record.label);
-              // console.log(Object.keys(rec));
+            var rec = new Record(record.thumb, record.artist, record.title, record.year, record.format, record.label);
+            // console.log(Object.keys(rec));
             // if (!(rec.key)) {
             //     // console.log("No Info!");
             //     rec.key = "No Info!";
             // };
+            // if (rec.thumb) {
+
+            //     return `<img src="./imgs/small-vinyl-record-mark.png">`;
+            // }
+
+
+            if (rec.thumb || rec.thumb == "" || rec.thumb === undefined) {
+                rec.thumb = `<img src="./imgs/small-vinyl-record-mark.png">`;
+
+                // return `<img src="./imgs/small-vinyl-record-mark.png">`;
+            }
+
 
 
             if (rec.format === undefined) {
+
                 rec.format = "No format";
             }
             if (rec.label === undefined) {
@@ -91,7 +116,7 @@ function writeToDocument(url) {
 
         });
 
-
+        // <img src="./imgs/small-vinyl-record-mark.png">
         cleanData.forEach(function(Record) {
             var dataRow = [];
 
@@ -99,9 +124,10 @@ function writeToDocument(url) {
             Object.keys(Record).forEach(function(key) {
 
                 var rowData = Record[key].toString();
-                // console.log(rowData);
 
-                var truncatedData = rowData.substring(0, 40);
+
+                var truncatedData = rowData.substring(0, 50);
+                // console.log(truncatedData);
 
                 dataRow.push(`<td>${truncatedData}</td>&nbsp`);
             });
@@ -116,4 +142,3 @@ function writeToDocument(url) {
 
 
 }
-

@@ -57,11 +57,9 @@ function displayArtistDetails(details) {
         <h5>Name variations:</h5> <ul><li>&nbsp${details.namevariations}</li></ul>
         <h5>Members:</h5><ul>${membersHTML}</ul>
         <h5>Ex-Members:</h5> <ul>${exMembersHTML}</ul>
-        <h5>Social:</h5> <ul><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
+        <h5>Social:</h5> <ul class="list-social"><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
             <li><a target="_blank" href="${firstTwitURL}"><i class="fab fa-twitter-square fa-2x"></i><a></li>
-      </ul>
-      
-    `;
+      </ul>   `;
 }
 
 
@@ -70,14 +68,17 @@ function fetchDiscogsData(event) {
 
     $("#dc-artist-data").html("");
     $("#dc-artist-details").html("");
+    $("#data").html("");
 
     var artist = $("#dc-artist-inputbox").val();
     if (!artist) {
-        $("#dc-artist-data").html(`<h3>Enter an Artist</h3>`);
+        $("#dc-artist-inputbox").html(`<h5>Enter an Artist</h5>`);
         return;
     }
 
-    $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
+    // $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
+
+    $("#dc-artist-details").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
 
     $.when(
         $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`),
@@ -100,13 +101,19 @@ function fetchDiscogsData(event) {
                 $("#dc-artist-data").html(
                     `<h3>No info found for the artist ${artist}</h3>`);
             }
+            else if (errorResponse.status === 403 || errorResponse.status === 429) {
+
+                var resetTime = new Date(errorResponse.getResponseHeader('X-RateLimit-Remaining') * 1000);
+                $("#dc-artist-data").html(`<h5>Too many requests, please wait until ${resetTime.toLocaleTimeString()}</h5>`);
+            }
             else {
                 console.log(errorResponse);
                 $("#dc-artist-data").html(
                     `<h3>Error: ${errorResponse.responseJSON.message}</h3>`);
             }
-        });
-        
+        }
+    );
+
 };
 
 
