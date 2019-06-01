@@ -1,20 +1,23 @@
-ul li{
-    display:inline;
-   list-style-type: none;
+ul li {
+    display: inline;
+    list-style-type: none;
 }
 
-.blurb{
-    margin:0px;
+.blurb {
+    margin: 0px;
     padding: 0px;
-    color: rgba(255,255,255,.5);
-    float:right;
+    color: rgba(255, 255, 255, .5);
+    float: right;
 }
 
 .bg-dark {
     background-color: #333333!important;
 }
 
-.navbar-brand{
-    padding:0;
+.navbar-brand {
+    padding: 0;
 }
 
+.btn-outline-warning {
+    margin-right: 8px;
+}

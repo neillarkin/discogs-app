@@ -98,23 +98,14 @@ function fetchDiscogsData(event) {
 
     var artist = $("#dc-artist-inputbox").val();
 
-
-    // $("#dc-artist-inputbox")
-    //     .keyup(function() {
-    //         var value = $(this).val();
-    //         $("dc-artist-data").text(value);
-    //     }).keyup();
-
-
-
     if (!artist) {
         $("#dc-artist-inputbox").html(`<h5>Enter an Artist</h5>`);
         return;
     }
 
-    // $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
+    $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
 
-    $("#dc-artist-details").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
+    // $("#dc-artist-details").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
 
     $.when(
         $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`),
@@ -132,9 +123,8 @@ function fetchDiscogsData(event) {
                     $("#dc-artist-details").html(displayArtistDetails(artistDetails));
                 }
             );
-        },
-        function(errorResponse) {
-            if (errorResponse.status === 404) {
+        },function(errorResponse) {
+            if (errorResponse.status === 404 || errorResponse.status === 500) {
                 $("#dc-artist-data").html(
                     `<h3>No info found for the artist ${artist}</h3>`);
             }
