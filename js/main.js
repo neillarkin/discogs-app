@@ -39,7 +39,8 @@ function displayArtistDetails(details) {
         groups.forEach(function(key) {
             if (key.active) {
                 groupsHTML.push(`<li>&nbsp${key.name}</li>`);
-            }    else if (!(key.active)) {
+            }
+            else if (!(key.active)) {
                 groupsHTML.push(`<li>&nbspNone</li>`);
             }
         });
@@ -48,7 +49,7 @@ function displayArtistDetails(details) {
     if (!(details.groups) && !(details.members)) {
         membersHTML.push(`<li>&nbsp${details.realname}</li>`);
         groupsHTML.push(`<li>&nbspNone</li>`);
-      }
+    }
 
     var social = details.urls;
     // if (members.length == 0) {
@@ -95,6 +96,7 @@ function fetchDiscogsData(event) {
     $("#dc-artist-data").html("");
     $("#dc-artist-details").html("");
     $("#data").html("");
+    $("#dataviz").html("");
 
     var artist = $("#dc-artist-inputbox").val();
 
@@ -123,7 +125,8 @@ function fetchDiscogsData(event) {
                     $("#dc-artist-details").html(displayArtistDetails(artistDetails));
                 }
             );
-        },function(errorResponse) {
+        },
+        function(errorResponse) {
             if (errorResponse.status === 404 || errorResponse.status === 500) {
                 $("#dc-artist-data").html(
                     `<h3>No info found for the artist ${artist}</h3>`);
