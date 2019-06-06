@@ -18,6 +18,29 @@ ul li {
     padding: 0;
 }
 
-.btn-outline-warning {
-    margin-right: 8px;
+/*.btn-outline-warning {*/
+
+/*    margin-right: px;*/
+
+/*}*/
+
+.btn,
+btn-warning {
+    margin-bottom: -20px;
 }
+
+table {
+    margin: 0;
+    font-size: .75em;
+     border: 2px solid #E0E0E0;
+}
+
+#data {
+    margin-top: 0px;
+}
+
+#dataviz {
+    margin-top: 20px;
+    margin: 50px;
+}
+

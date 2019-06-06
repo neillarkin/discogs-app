@@ -7,7 +7,7 @@ function getData(url, cb) {
         }
         else if (this.status === 404) {
             $("#dc-artist-data").html(
-                `<h5>Search for an artist... </h5>`);
+                `<h5>Type an artist name in to the search field... </h5>`);
         }
     };
 
@@ -66,8 +66,7 @@ function writeToDocument(url) {
     var cleanData = [{}];
     var el = document.getElementById("data");
     $("#data").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
-
-
+ 
     getData(url, function(data) {
         var pagination = "";
         var pagData = data.pagination.urls;
@@ -111,8 +110,10 @@ function writeToDocument(url) {
             tableRows.push(`<tr>${dataRow}</tr>`);
         });
         var tableHeaders = getTableHeaders(cleanData[1]);
+        // getDataFromURL()
 
-        el.innerHTML = `<table class="table-light table-striped" id="table-releases">${tableHeaders}${tableRows}</table>${pagination}`.replace(/,/g, "");;
+        el.innerHTML = `${pagination}<table class="table-light table-striped" id="table-releases">${tableHeaders}${tableRows}</table>`.replace(/,/g, "");
+        cleanFormatItems(data);
     });
 
 

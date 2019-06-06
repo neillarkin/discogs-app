@@ -53,7 +53,6 @@ function cleanFormatItems(releases) {
 
         switch (true) {
             case record.format === undefined:
-
                 return record.format = "No Info";
                 // console.log(record.format);
 
@@ -80,7 +79,7 @@ function cleanFormatItems(releases) {
         }
 
         // console.log(contains(record.format, conditions_vinyl));
-        visualizeData(releases);
+        // visualizeData(releases);
     })
 
     visualizeData(releases);
@@ -88,10 +87,7 @@ function cleanFormatItems(releases) {
 
 
 function visualizeData(releases) {
-
-
-
-    console.log(releases)
+    // console.log(releases)
 
     var ndx = crossfilter(releases);
 
@@ -99,7 +95,7 @@ function visualizeData(releases) {
 
     var vinylPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Vinyl') {
-            console.log(d.format)
+            // console.log(d.format)
             return +d.year;
         }
         else {
@@ -109,7 +105,7 @@ function visualizeData(releases) {
 
     var tapePerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Tape') {
-            console.log(d.format)
+            // console.log(d.format)
             return +d.year;
         }
         else {
@@ -119,7 +115,7 @@ function visualizeData(releases) {
 
     var opticalPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Optical') {
-            console.log(d.format)
+            // console.log(d.format)
             return +d.year;
         }
         else {
@@ -129,7 +125,7 @@ function visualizeData(releases) {
 
     var streamPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Streaming') {
-            console.log(d.format)
+            // console.log(d.format)
             return +d.year;
         }
         else {
@@ -139,7 +135,7 @@ function visualizeData(releases) {
 
     var noInfoPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'No Info') {
-            console.log(d.format)
+            // console.log(d.format)
             return +d.year;
         }
         else {
@@ -149,7 +145,7 @@ function visualizeData(releases) {
 
     var stackedChart = dc.barChart("#dataviz");
     stackedChart
-        .width(800)
+        .width(700)
         .height(500)
         .dimension(name_dim)
         .group(vinylPerYear, "Vinyl")
@@ -160,7 +156,7 @@ function visualizeData(releases) {
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .yAxisLabel("No. of Releases", "15")
-        .legend(dc.legend().x(710).y(0).itemHeight(15).gap(5));
+        .legend(dc.legend().x(630).y(0).itemHeight(15).gap(5));
 
     stackedChart.margins().right = 100;
     stackedChart.margins().left = 60;

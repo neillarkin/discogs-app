@@ -1,9 +1,6 @@
 var releases_url;
 
 function displayArtistInfo(artistData) {
-
-
-
     return `
       <img src="${artistData.thumb}" width="120" height="120" />
       <h2>${artistData.title}</h2>
@@ -58,8 +55,6 @@ function displayArtistDetails(details) {
 
 
 
-
-
     var fbURLs = [];
     var twitURLs = [];
 
@@ -90,7 +85,6 @@ function displayArtistDetails(details) {
 }
 
 
-
 function fetchDiscogsData(event) {
 
     $("#dc-artist-data").html("");
@@ -105,14 +99,15 @@ function fetchDiscogsData(event) {
         return;
     }
 
-    $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
+    // $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
 
-    // $("#dc-artist-details").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
+    $("#dc-artist-details").html(`<div class="text-center text-primary style="width: 6rem; height: 6rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
 
-    $.when(
-        $.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`),
-    ).then(
+    // $.when($.getJSON(`https://httpstat.us/429`),
+    // $.when($.getJSON(`https://httpstat.us/429`), ).then(
+        $.when($.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`), ).then(
         function(response) {
+            console.dir(response)
             var artistData = response.results[0];
             $("#dc-artist-data").html(displayArtistInfo(artistData));
 
@@ -123,17 +118,20 @@ function fetchDiscogsData(event) {
                     var artistDetails = response2;
                     releases_url = response2.releases_url
                     $("#dc-artist-details").html(displayArtistDetails(artistDetails));
+                    getURL();
                 }
             );
         },
         function(errorResponse) {
             if (errorResponse.status === 404 || errorResponse.status === 500) {
+                console.log("error 404 or 500")
                 $("#dc-artist-data").html(
                     `<h3>No info found for the artist ${artist}</h3>`);
             }
-            else if (errorResponse.status === 403 || errorResponse.status === 429) {
-
+            else if (errorResponse.status === 429 || errorResponse.status === 403) {
+                console.log("error 429 or 403")
                 var resetTime = new Date(errorResponse.getResponseHeader('X-RateLimit-Remaining') * 1000);
+                console.log(resetTime)
                 $("#dc-artist-data").html(`<h5>Too many requests, please wait until ${resetTime.toLocaleTimeString()}</h5>`);
             }
             else {
@@ -142,8 +140,8 @@ function fetchDiscogsData(event) {
                     `<h3>Error: ${errorResponse.responseJSON.message}</h3>`);
             }
         }
-    );
 
+    );
 };
 
 

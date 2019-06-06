@@ -24,10 +24,25 @@
 
 
     <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <script type="text/javascript" src="js/main.js"></script>
+
     <script type="text/javascript" src="js/releases.js"></script>
     <script type="text/javascript" src="js/visualisation.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <title>Dicogs demo app</title>
+
+    <script>
+        // $("#btn-releases").click(function() {
+        //     $('html, body').animate({
+        //         scrollTop: $("#head-releases").offset().top
+        //     }, 2000);
+        // });
+
+        // $("#btn-viz").click(function() {
+        //     $('html, body').animate({
+        //         scrollTop: $("#head-viz").offset().top
+        //     }, 2000);
+        // });
+    </script>
 </head>
 
 <body>
@@ -40,17 +55,17 @@
               </button>
             <!--onsubmit="return fetchDiscogsData(this)" method="GET"-->
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="" oninput="fetchDiscogsData()" type="search" placeholder="Type an artist name..." aria-label="Search">
+                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="nirvana" oninput="fetchDiscogsData()" type="search" placeholder="Type an artist name..." aria-label="Search">
                 <!--<button class="btn btn-outline-success my-2 my-sm-0" id="dc-artist-searchbox" type="submit">Search</button>-->
             </form>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <button class="btn btn-outline-warning my-2 my-sm-0" onclick="getURL()" type="submit">View artist releases</button>
+                        <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-releases" onclick="getURL()" type="submit">View artist releases</button>-->
                         <!--<a class="nav-link" href="#" onclick="getURL()">View artist releases <span class="sr-only">(current)</span></a>-->
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-outline-warning my-2 my-sm-0" onclick="getDataFromURL()" type="submit">View visualisation</button>
+                        <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-viz" onclick="getDataFromURL()" type="submit">View visualisation</button>-->
                         <!--<a class="nav-link" href="#" onclick="visualize()">View visualisation</a>-->
                     </li>
                 </ul>
@@ -60,13 +75,24 @@
         </nav>
     </header>
 
-    <section class="container-fluid ">
-        <div id="dc-artist-data"></div>
-        <div id="dc-artist-details"></div>
+    <section class="container-fluid">
+        <div class="row no-gutters">
+            <div class="col-sm-12 col-md-12 ">
+                <div id="dc-artist-data"></div>
+                <div id="dc-artist-details"></div>
+            </div>
+        </div>
         <!--<div id="dc-spinner"></div>-->
         <!--<button onclick="getURL()">Releases</button>-->
-        <div id="data"></div>
-        <div id="dataviz"></div>
+
+        <div class="row no-gutters">
+            <div class="col-sm-12 col-md-6 ">
+                <div id="data"> </div>
+            </div>
+             <div class="col-sm-12 col-md-6 ">   
+                <div id="dataviz"></div>
+            </div>
+        </div>
     </section>
 
     <footer class="container-fluid">
