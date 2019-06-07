@@ -85,7 +85,7 @@ function writeToDocument(url) {
 
             if (rec.format === undefined) {
 
-                rec.format = "No format";
+                rec.format = "No data!";
             }
 
             if (rec.label === undefined) {

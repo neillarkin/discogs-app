@@ -53,7 +53,7 @@ function cleanFormatItems(releases) {
 
         switch (true) {
             case record.format === undefined:
-                return record.format = "No Info";
+                return record.format = "No Info!";
                 // console.log(record.format);
 
             case contains(record.format, conditions_vinyl):
@@ -70,7 +70,7 @@ function cleanFormatItems(releases) {
                 // console.log(record.format);
 
             case contains(record.format, conditions_streaming):
-                return record.format = "Streaming";
+                return record.format = "MP3";
                 // console.log(record.format);
             default:
                 return record.format = "No Info";
@@ -95,18 +95,20 @@ function visualizeData(releases) {
 
     var vinylPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Vinyl') {
-            // console.log(d.format)
-            return +d.year;
+
+            return Math.ceil((+d.year / 2) / 1000);
         }
         else {
             return 0;
         }
     });
 
+    //   console.log("Format: " + d.format + " Year: " + d.year)
+
     var tapePerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Tape') {
-            // console.log(d.format)
-            return +d.year;
+            // console.log("Format: " + d.format + " Year: " + d.year)
+            return Math.ceil((+d.year / 2) / 1000);
         }
         else {
             return 0;
@@ -115,8 +117,8 @@ function visualizeData(releases) {
 
     var opticalPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'Optical') {
-            // console.log(d.format)
-            return +d.year;
+            // console.log("Format: " + d.format + " Year: " + d.year)
+            return Math.ceil((+d.year / 2) / 1000);
         }
         else {
             return 0;
@@ -124,9 +126,9 @@ function visualizeData(releases) {
     });
 
     var streamPerYear = name_dim.group().reduceSum(function(d) {
-        if (d.format === 'Streaming') {
-            // console.log(d.format)
-            return +d.year;
+        if (d.format === 'MP3') {
+            // console.log("Format: " + d.format + " Year: " + d.year)
+            return Math.ceil((+d.year / 2) / 1000);
         }
         else {
             return 0;
@@ -136,7 +138,7 @@ function visualizeData(releases) {
     var noInfoPerYear = name_dim.group().reduceSum(function(d) {
         if (d.format === 'No Info') {
             // console.log(d.format)
-            return +d.year;
+            return Math.ceil((+d.year / 2) / 1000);
         }
         else {
             return 0;
@@ -151,15 +153,21 @@ function visualizeData(releases) {
         .group(vinylPerYear, "Vinyl")
         .stack(tapePerYear, "Tape")
         .stack(opticalPerYear, "Optical")
-        .stack(streamPerYear, "Streaming")
+        .stack(streamPerYear, "MP3")
         // .stack(noInfoPerYear, "No Info")
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
+        .xAxisLabel("Type of audio format released per year")
         .yAxisLabel("No. of Releases", "15")
         .legend(dc.legend().x(630).y(0).itemHeight(15).gap(5));
 
     stackedChart.margins().right = 100;
     stackedChart.margins().left = 60;
+    // stackedChart.yAxis().tickFormat(d3.format(".0s")));
+    // stackedChart.valueAccessor(function(d) { return d.value; });
+
+    // stackedChart.yAxis().formatNumber(d3.format(".2%"))
+    // stackedChart.yAxis().tickValues(function(d){d.format})
     // stackedChart.title("Evolution of audio formats over time")
 
     dc.renderAll();

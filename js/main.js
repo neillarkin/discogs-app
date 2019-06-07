@@ -107,7 +107,7 @@ function fetchDiscogsData(event) {
     // $.when($.getJSON(`https://httpstat.us/429`), ).then(
         $.when($.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`), ).then(
         function(response) {
-            console.dir(response)
+            // console.dir(response)
             var artistData = response.results[0];
             $("#dc-artist-data").html(displayArtistInfo(artistData));
 
