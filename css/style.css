@@ -26,6 +26,8 @@ ul li {
 
 .btn,
 btn-warning {
+    float: right;
+    margin-left:5px;
     margin-bottom: -20px;
 }
 
@@ -44,3 +46,9 @@ table {
     margin: 50px;
 }
 
+#dataviz2 {
+    margin-top:-200px;
+      margin-left: 100px;
+      padding:70px;
+}
+  

@@ -1,5 +1,5 @@
 // var url = releases_url;
-
+var url;
 
 function Record(thumb, artist, title, year, format, label) {
     this.thumb = thumb;
@@ -11,23 +11,23 @@ function Record(thumb, artist, title, year, format, label) {
 }
 
 
-function getDataFromURL(url) {
-    url = releases_url;
+// function getDataFromURL(url) {
+//     url = releases_url;
 
-    // url = "https://api.discogs.com/artists/69866/releases?per_page=50&page=10"
+//     // url = "https://api.discogs.com/artists/69866/releases?per_page=50&page=10"
 
-    // url = "https://api.discogs.com/artists/45/releases?per_page=50&page=1";
-    // var releases = [{}];
+//     // url = "https://api.discogs.com/artists/45/releases?per_page=50&page=1";
+//     // var releases = [{}];
 
-    $.when($.getJSON(url)).then(
-        function(response) {
-            var releases = response.releases;
-            // console.log(releases)
+//     $.when($.getJSON(url)).then(
+//         function(response) {
+//             var releases = response.releases;
+//             // console.log(releases)
 
-            cleanFormatItems(releases)
-        }
-    );
-}
+//             cleanFormatItems(releases)
+//         }
+//     );
+// }
 
 function cleanFormatItems(releases) {
 
@@ -39,7 +39,7 @@ function cleanFormatItems(releases) {
     releases.forEach(function(record, format) {
 
         // if (record.format === undefined) {
-        //     record.format = "No Info";
+        //     record.format = "No data!";
         // }
 
         function contains(target, pattern) {
@@ -53,7 +53,7 @@ function cleanFormatItems(releases) {
 
         switch (true) {
             case record.format === undefined:
-                return record.format = "No Info!";
+                return record.format = "No data!";
                 // console.log(record.format);
 
             case contains(record.format, conditions_vinyl):
@@ -73,7 +73,7 @@ function cleanFormatItems(releases) {
                 return record.format = "MP3";
                 // console.log(record.format);
             default:
-                return record.format = "No Info";
+                return record.format = "No data!";
                 // console.log("NO DATA")
                 // record.format = "NO DATA";
         }
@@ -82,20 +82,21 @@ function cleanFormatItems(releases) {
         // visualizeData(releases);
     })
 
-    visualizeData(releases);
+    generateCharts(releases);
 }
 
 
-function visualizeData(releases) {
+function generateCharts(releases) {
     // console.log(releases)
 
     var ndx = crossfilter(releases);
 
-    var name_dim = ndx.dimension(dc.pluck('year'));
+    var year_dim = ndx.dimension(dc.pluck('year'));
 
-    var vinylPerYear = name_dim.group().reduceSum(function(d) {
+    var vinylPerYear = year_dim.group().reduceSum(function(d) {
         if (d.format === 'Vinyl') {
-
+            //   console.log("Format: " + d.format + " Year: " + d.year)
+            // console.log(Math.ceil((+d.year / 2) / 1000));
             return Math.ceil((+d.year / 2) / 1000);
         }
         else {
@@ -103,9 +104,7 @@ function visualizeData(releases) {
         }
     });
 
-    //   console.log("Format: " + d.format + " Year: " + d.year)
-
-    var tapePerYear = name_dim.group().reduceSum(function(d) {
+    var tapePerYear = year_dim.group().reduceSum(function(d) {
         if (d.format === 'Tape') {
             // console.log("Format: " + d.format + " Year: " + d.year)
             return Math.ceil((+d.year / 2) / 1000);
@@ -115,7 +114,7 @@ function visualizeData(releases) {
         }
     });
 
-    var opticalPerYear = name_dim.group().reduceSum(function(d) {
+    var opticalPerYear = year_dim.group().reduceSum(function(d) {
         if (d.format === 'Optical') {
             // console.log("Format: " + d.format + " Year: " + d.year)
             return Math.ceil((+d.year / 2) / 1000);
@@ -125,7 +124,7 @@ function visualizeData(releases) {
         }
     });
 
-    var streamPerYear = name_dim.group().reduceSum(function(d) {
+    var streamPerYear = year_dim.group().reduceSum(function(d) {
         if (d.format === 'MP3') {
             // console.log("Format: " + d.format + " Year: " + d.year)
             return Math.ceil((+d.year / 2) / 1000);
@@ -135,8 +134,8 @@ function visualizeData(releases) {
         }
     });
 
-    var noInfoPerYear = name_dim.group().reduceSum(function(d) {
-        if (d.format === 'No Info') {
+    var noInfoPerYear = year_dim.group().reduceSum(function(d) {
+        if (d.format === 'No data!') {
             // console.log(d.format)
             return Math.ceil((+d.year / 2) / 1000);
         }
@@ -149,12 +148,12 @@ function visualizeData(releases) {
     stackedChart
         .width(700)
         .height(500)
-        .dimension(name_dim)
+        .dimension(year_dim)
         .group(vinylPerYear, "Vinyl")
         .stack(tapePerYear, "Tape")
         .stack(opticalPerYear, "Optical")
         .stack(streamPerYear, "MP3")
-        // .stack(noInfoPerYear, "No Info")
+        // .stack(noInfoPerYear, "No data!")
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
         .xAxisLabel("Type of audio format released per year")
@@ -163,16 +162,33 @@ function visualizeData(releases) {
 
     stackedChart.margins().right = 100;
     stackedChart.margins().left = 60;
-    // stackedChart.yAxis().tickFormat(d3.format(".0s")));
-    // stackedChart.valueAccessor(function(d) { return d.value; });
 
-    // stackedChart.yAxis().formatNumber(d3.format(".2%"))
-    // stackedChart.yAxis().tickValues(function(d){d.format})
-    // stackedChart.title("Evolution of audio formats over time")
+    // dc.renderAll();
+
+    var format_dim = ndx.dimension(dc.pluck('format'));
+
+    var total_formats_per_set = format_dim.group().reduceSum(dc.pluck('year'))
+
+    var pieChart = dc.pieChart('#dataviz2')
+    pieChart
+        .height(330)
+        .radius(270)
+        .innerRadius(45)
+        .externalLabels(0)
+        .transitionDuration(2000)
+        .dimension(format_dim)
+        .group(total_formats_per_set)
+        .colors(d3.scale.ordinal().range(['grey', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(31, 119, 180)', 'rgb(214, 39, 40)']))
+        .legend(dc.legend().x(370).y(0).itemHeight(15).gap(5));
+
+    //   .colors(d3.scale.ordinal().range(['grey', 'orange', 'green', 'blue','red']))
 
     dc.renderAll();
 
-
-
-
 }
+
+// function generatePieChart(releases) {
+//     var ndx = crossfilter(releases);
+
+
+// }

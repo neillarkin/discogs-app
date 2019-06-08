@@ -39,8 +39,8 @@ function getTableHeaders(obj) {
 
 function generatePaginationButtons(next, prev) {
     if (next && prev) {
-        return `<button type="button" class="btn btn-warning" onclick="writeToDocument('${prev}')">Previous</button>
-                <button type="button" class="btn btn-warning" onclick="writeToDocument('${next}')">Next</button>`;
+        return `<button type="button" class="btn btn-warning" onclick="writeToDocument('${next}')">Next</button>
+                <button type="button" class="btn btn-warning" onclick="writeToDocument('${prev}')">Previous</button>`;
     }
     else if (next && !prev) {
         return `<button type="button" class="btn btn-warning" onclick="writeToDocument('${next}')">Next</button>`;
