@@ -75,7 +75,8 @@ function writeToDocument(url) {
         }
 
         data = data.releases;
-        // console.log(data);
+        // console.log(data)
+        // console.log(data[0].artist);
         data.forEach(function(record) {
             var rec = new Record(record.thumb, record.artist, record.title, record.year, record.format, record.label);
 
@@ -94,7 +95,8 @@ function writeToDocument(url) {
             if (rec.year === undefined) {
                 rec.year = "No year";
             }
-
+           
+// console.log(cleanData)
             cleanData.push(rec);
 
 
