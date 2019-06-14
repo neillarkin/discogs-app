@@ -49,16 +49,16 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-            <a class="navbar-brand" href="#"><img src="imgs/small-logo-white.png" alt="brand icon" /></a>
+            <a class="navbar-brand" href="index.html"><img src="imgs/small-logo-white.png" alt="brand icon" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
               </button>
             <!--onsubmit="return fetchDiscogsData(this)" method="GET"-->
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="nirvana" oninput="fetchDiscogsData()" type="search" placeholder="Type an artist name..." aria-label="Search">
-                <!--<button class="btn btn-outline-success my-2 my-sm-0" id="dc-artist-searchbox" type="submit">Search</button>-->
+                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value=""  type="" placeholder="Type an artist name..." aria-label="Search">
+                <button class="btn btn-outline-warning my-2 my-sm-0" id="dc-artist-searchbox" type="button" onclick="fetchDiscogsData()">Search</button>
             </form>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">  
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-releases" onclick="getURL()" type="submit">View artist releases</button>-->
@@ -89,9 +89,10 @@
             <div class="col-sm-12 col-md-6 ">
                 <div id="data"> </div>
             </div>
-             <div class="col-sm-12 col-md-6 ">   
-                <div id="dataviz">Type of audio format released per year</div>
-                   <div id="dataviz2"></div>
+             <div class="col-sm-12 col-md-6 ">  
+             <!--Frequency of audio format type over time-->
+                <div id="dataviz"><span>Type of audio format released per year</span></div>
+                   <div id="dataviz2">Type of audio format released</div>
             </div>
         </div>
     </section>

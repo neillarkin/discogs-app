@@ -10,7 +10,7 @@ function getData(url, cb) {
                 `<h5>Type an artist name in to the search field... </h5>`);
         }
     };
-
+    
     xhr.open("GET", url);
     xhr.send();
 }
@@ -39,14 +39,14 @@ function getTableHeaders(obj) {
 
 function generatePaginationButtons(next, prev) {
     if (next && prev) {
-        return `<button type="button" class="btn btn-warning" onclick="writeToDocument('${next}')">Next</button>
-                <button type="button" class="btn btn-warning" onclick="writeToDocument('${prev}')">Previous</button>`;
+        return `<button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${next}')">Next</button>
+                <button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${prev}')">Previous</button>`;
     }
     else if (next && !prev) {
-        return `<button type="button" class="btn btn-warning" onclick="writeToDocument('${next}')">Next</button>`;
+        return `<button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${next}')">Next</button>`;
     }
     else if (!next && prev) {
-        return `<button type="button" class="btn btn-warning" onclick="writeToDocument('${prev}')">Previous</button>`;
+        return `<button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${prev}')">Previous</button>`;
     }
 }
 

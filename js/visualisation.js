@@ -98,7 +98,7 @@ function generateCharts(releases) {
             //   console.log("Format: " + d.format + " Year: " + d.year)
             // console.log(Math.ceil((+d.year / 2) / 1000));
             return Math.ceil((+d.year / 2) / 1000);
-        }
+        }   
         else {
             return 0;
         }
@@ -163,11 +163,16 @@ function generateCharts(releases) {
     stackedChart.margins().right = 100;
     stackedChart.margins().left = 60;
 
+
     // dc.renderAll();
 
     var format_dim = ndx.dimension(dc.pluck('format'));
 
     var total_formats_per_set = format_dim.group().reduceSum(dc.pluck('year'))
+
+  var colorScale = d3.scale.ordinal().domain(["Vinyl", "Tape", "Optical", "MP3", "No data!"])
+        .range(['blue', 'orange', 'green','red', 'grey']);
+
 
     var pieChart = dc.pieChart('#dataviz2')
     pieChart
@@ -178,10 +183,19 @@ function generateCharts(releases) {
         .transitionDuration(2000)
         .dimension(format_dim)
         .group(total_formats_per_set)
-        .colors(d3.scale.ordinal().range(['grey', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(31, 119, 180)', 'rgb(214, 39, 40)']))
+        .colors(colorScale)
+        // .colors(d3.scale.ordinal().range(['grey', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(31, 119, 180)', 'rgb(214, 39, 40)']))
         .legend(dc.legend().x(370).y(0).itemHeight(15).gap(5));
 
+  
+
+    // pieChart.colors(function(d) { return colorScale(d.fruitType); });
+
+// pieChart.colors(colorScale);
+
     //   .colors(d3.scale.ordinal().range(['grey', 'orange', 'green', 'blue','red']))
+
+
 
     dc.renderAll();
 

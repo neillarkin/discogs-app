@@ -91,7 +91,7 @@ function fetchDiscogsData(event) {
     $("#dc-artist-details").html("");
     $("#data").html("");
     $("#dataviz").html("");
-
+    $("#dataviz2").html("");
     var artist = $("#dc-artist-inputbox").val();
 
     if (!artist) {
@@ -105,9 +105,14 @@ function fetchDiscogsData(event) {
 
     // $.when($.getJSON(`https://httpstat.us/429`),
     // $.when($.getJSON(`https://httpstat.us/429`), ).then(
-        $.when($.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`), ).then(
+    $.when($.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`), ).then(
         function(response) {
-            // console.dir(response)
+            // console.log(response)
+            if (!Array.isArray(response.results) || !response.results.length) {
+                $("#dc-artist-data").html(
+                    `<h3>No info found for the artist ${artist}</h3>`);
+
+            }
             var artistData = response.results[0];
             $("#dc-artist-data").html(displayArtistInfo(artistData));
 
