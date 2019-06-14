@@ -2,22 +2,22 @@ const testURL = "https://api.discogs.com/artists/125246/releases"
 const artist_Test_Name = "Nirvana";
 var myArray = []
 
-function fetchData(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log("Fetch JSON data")
-            callback(JSON.parse(this.responseText));
-            console.log("Callback complete");
-            // runTests();
-            console.log(myArray);
+// function fetchData(url, callback) {
+//     var xhr = new XMLHttpRequest();
+//     xhr.onreadystatechange = function() {
+//         if (this.readyState == 4 && this.status == 200) {
+//             console.log("Fetch JSON data")
+//             callback(JSON.parse(this.responseText));
+//             console.log("Callback complete");
+//             // runTests();
+//             console.log(myArray);
 
-        }
-    };
+//         }
+//     };
 
-    xhr.open("GET", url);
-    xhr.send();
-}
+//     xhr.open("GET", url);
+//     xhr.send();
+// }
 
 function createArray(url) {
     getData(url, function(data) {
