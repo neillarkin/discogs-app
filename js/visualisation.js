@@ -87,7 +87,7 @@ function cleanFormatItems(releases) {
 
 
 function generateCharts(releases) {
-    // console.log(releases)
+    console.log(releases)
 
     var ndx = crossfilter(releases);
 
@@ -98,7 +98,7 @@ function generateCharts(releases) {
             //   console.log("Format: " + d.format + " Year: " + d.year)
             // console.log(Math.ceil((+d.year / 2) / 1000));
             return Math.ceil((+d.year / 2) / 1000);
-        }   
+        }
         else {
             return 0;
         }
@@ -116,7 +116,9 @@ function generateCharts(releases) {
 
     var opticalPerYear = year_dim.group().reduceSum(function(d) {
         if (d.format === 'Optical') {
-            // console.log("Format: " + d.format + " Year: " + d.year)
+            console.log("Line Graph.  Format: " + d.format + " Year: " + d.year)
+            console.log("Line Graph: " + Math.ceil((+d.year / 2) / 1000));
+            
             return Math.ceil((+d.year / 2) / 1000);
         }
         else {
@@ -149,6 +151,7 @@ function generateCharts(releases) {
         .width(700)
         .height(500)
         .dimension(year_dim)
+        .transitionDuration(2000)
         .group(vinylPerYear, "Vinyl")
         .stack(tapePerYear, "Tape")
         .stack(opticalPerYear, "Optical")
@@ -168,30 +171,38 @@ function generateCharts(releases) {
 
     var format_dim = ndx.dimension(dc.pluck('format'));
 
-    var total_formats_per_set = format_dim.group().reduceSum(dc.pluck('year'))
+    var total_formats_per_set = format_dim.group().reduceCount(dc.pluck('year'))
+    
 
-  var colorScale = d3.scale.ordinal().domain(["Vinyl", "Tape", "Optical", "MP3", "No data!"])
-        .range(['blue', 'orange', 'green','red', 'grey']);
+    var colorScale = d3.scale.ordinal().domain(["Vinyl", "Tape", "Optical", "MP3", "No data!"])
+        .range(['rgb(31, 119, 180)', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(214, 39, 40)', '#fff']);
 
 
     var pieChart = dc.pieChart('#dataviz2')
     pieChart
         .height(330)
         .radius(270)
-        .innerRadius(45)
+        .innerRadius(75)
         .externalLabels(0)
-        .transitionDuration(2000)
+        .transitionDuration(4000)
         .dimension(format_dim)
         .group(total_formats_per_set)
         .colors(colorScale)
         // .colors(d3.scale.ordinal().range(['grey', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(31, 119, 180)', 'rgb(214, 39, 40)']))
-        .legend(dc.legend().x(370).y(0).itemHeight(15).gap(5));
+        .legend(dc.legend().x(125).y(120).itemHeight(15).gap(5));
 
-  
+
+
+    //   .legend(dc.legend().x(370).y(0).itemHeight(15).gap(5));
+
+// pieChart.  .attr('fill', function(d){ return(color(d.data.key)) })
+//   .attr("stroke", "black")
+//   .style("stroke-width", "2px")
+//   .style("opacity", 0.7)
 
     // pieChart.colors(function(d) { return colorScale(d.fruitType); });
 
-// pieChart.colors(colorScale);
+    // pieChart.colors(colorScale);
 
     //   .colors(d3.scale.ordinal().range(['grey', 'orange', 'green', 'blue','red']))
 
@@ -206,3 +217,4 @@ function generateCharts(releases) {
 
 
 // }
+

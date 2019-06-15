@@ -55,7 +55,7 @@
               </button>
             <!--onsubmit="return fetchDiscogsData(this)" method="GET"-->
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value=""  type="" placeholder="Type an artist name..." aria-label="Search">
+                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="katy perry"  type="" placeholder="Type an artist name..." aria-label="Search">
                 <button class="btn btn-outline-warning my-2 my-sm-0" id="dc-artist-searchbox" type="button" onclick="fetchDiscogsData()">Search</button>
             </form>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">  
@@ -92,13 +92,14 @@
              <div class="col-sm-12 col-md-6 ">  
              <!--Frequency of audio format type over time-->
                 <div id="dataviz"><span>Type of audio format released per year</span></div>
-                   <div id="dataviz2">Type of audio format released</div>
+                   <div id="dataviz2" class="pie-slice">Type of audio format released</div>
+                   <div id="my_dataviz"></div>
             </div>
         </div>
     </section>
 
     <footer class="container-fluid">
-        <!--<p class="inline-block">Developed by Neil Larkin ©2019</p>-->
+        <p class="inline-block">Developed by Neil Larkin ©2019</p>
     </footer>
 
 </body>

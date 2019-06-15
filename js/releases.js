@@ -10,7 +10,7 @@ function getData(url, cb) {
                 `<h5>Type an artist name in to the search field... </h5>`);
         }
     };
-    
+
     xhr.open("GET", url);
     xhr.send();
 }
@@ -27,7 +27,7 @@ function getTableHeaders(obj) {
     Object.keys(obj).forEach(function(key) {
         // obj.thumb=="#";
         if (key == "thumb") {
-            tableHeaders.push(`<th>&nbsp</th>`);
+            tableHeaders.push(`<th></th>`);
         }
         else {
             tableHeaders.push(`<th>${key}</th>`);
@@ -65,8 +65,8 @@ function writeToDocument(url) {
     var tableRows = [];
     var cleanData = [{}];
     var el = document.getElementById("data");
-    $("#data").html(`<div class="text-center text-primary style="width: 3rem; height: 3rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
- 
+    $("#data").html(`<div class="text-center text-primary style="width: 4rem; height: 4rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
+
     getData(url, function(data) {
         var pagination = "";
         var pagData = data.pagination.urls;
@@ -95,8 +95,8 @@ function writeToDocument(url) {
             if (rec.year === undefined) {
                 rec.year = "No year";
             }
-           
-// console.log(cleanData)
+
+            // console.log(cleanData)
             cleanData.push(rec);
 
 
@@ -107,7 +107,7 @@ function writeToDocument(url) {
             Object.keys(Record).forEach(function(key) {
                 var rowData = Record[key].toString();
                 var truncatedData = rowData.substring(0, 50);
-                dataRow.push(`<td>${truncatedData}</td>&nbsp`);
+                dataRow.push(`<td>${truncatedData}</td>`);
             });
             tableRows.push(`<tr>${dataRow}</tr>`);
         });

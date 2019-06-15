@@ -47,8 +47,22 @@ table {
 }
 
 #dataviz2 {
-    margin-top:-100px;
-      margin-left: 100px;
-      padding:70px;
+    margin-top:-50px;
+      margin-left: 250px;
+      /*padding:70px;*/
 }
   
+  /***********************Visualisation*/
+.dc-chart rect.bar, .pie-slice{
+     stroke-width: 1;
+  stroke: #000;
+  fill-opacity: 1;
+}
+
+.pie-label{
+     stroke-width: 0;
+}
+
+.pie-slice _0{
+    fill-opacity: 0;
+}
