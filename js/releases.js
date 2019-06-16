@@ -39,14 +39,32 @@ function getTableHeaders(obj) {
 
 function generatePaginationButtons(next, prev) {
     if (next && prev) {
-        return `<button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${next}')">Next</button>
-                <button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${prev}')">Previous</button>`;
+        return `
+        <div class="row no-gutters">
+        <div class="col-sm-12 col-md-12">
+            <button type="button" class="btn btn-warning float-left" type="button" onclick="writeToDocument('${prev}')">Previous</button>
+            <button type="button" class="btn btn-warning float-right" type="button" onclick="writeToDocument('${next}')">Next</button>
+        </div>
+       </div>
+        `;
     }
     else if (next && !prev) {
-        return `<button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${next}')">Next</button>`;
+        return `
+        <div class="row no-gutters">
+        <div class="col-sm-12 col-md-12">
+            <button type="button" class="btn btn-warning float-right" type="button" onclick="writeToDocument('${next}')">Next</button>
+        </div>
+       </div>
+        `;
     }
     else if (!next && prev) {
-        return `<button type="button" class="btn btn-warning" type="button" onclick="writeToDocument('${prev}')">Previous</button>`;
+        return `
+        <div class="row no-gutters">
+        <div class="col-sm-12 col-md-12">
+            <button type="button" class="btn btn-warning float-left" type="button" onclick="writeToDocument('${prev}')">Previous</button>
+        </div>
+       </div>
+        `;
     }
 }
 

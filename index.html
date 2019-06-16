@@ -31,17 +31,11 @@
     <title>Dicogs demo app</title>
 
     <script>
-        // $("#btn-releases").click(function() {
-        //     $('html, body').animate({
-        //         scrollTop: $("#head-releases").offset().top
-        //     }, 2000);
-        // });
-
-        // $("#btn-viz").click(function() {
-        //     $('html, body').animate({
-        //         scrollTop: $("#head-viz").offset().top
-        //     }, 2000);
-        // });
+        $('#dc-artist-inputbox').keypress(function(e) {
+            if (e.keyCode == 13) {
+                $('#dc-artist-searchbox').click();
+            }
+        });
     </script>
 </head>
 
@@ -50,34 +44,34 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
             <a class="navbar-brand" href="index.html"><img src="imgs/small-logo-white.png" alt="brand icon" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-              </button>
+            <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+            <!--<span class="navbar-toggler-icon"></span>-->
+            <!--  </button>-->
             <!--onsubmit="return fetchDiscogsData(this)" method="GET"-->
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="katy perry"  type="" placeholder="Type an artist name..." aria-label="Search">
+                <input class="form-control mr-sm-2" id="dc-artist-inputbox" value="nirvana" type="" placeholder="Type an artist name..." aria-label="Search">
                 <button class="btn btn-outline-warning my-2 my-sm-0" id="dc-artist-searchbox" type="button" onclick="fetchDiscogsData()">Search</button>
             </form>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">  
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-releases" onclick="getURL()" type="submit">View artist releases</button>-->
-                        <!--<a class="nav-link" href="#" onclick="getURL()">View artist releases <span class="sr-only">(current)</span></a>-->
-                    </li>
-                    <li class="nav-item">
-                        <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-viz" onclick="getDataFromURL()" type="submit">View visualisation</button>-->
-                        <!--<a class="nav-link" href="#" onclick="visualize()">View visualisation</a>-->
-                    </li>
-                </ul>
+            <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">  -->
+            <!--    <ul class="navbar-nav mr-auto">-->
+            <!--        <li class="nav-item active">-->
+            <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-releases" onclick="getURL()" type="submit">View artist releases</button>-->
+            <!--<a class="nav-link" href="#" onclick="getURL()">View artist releases <span class="sr-only">(current)</span></a>-->
+            <!--        </li>-->
+            <!--        <li class="nav-item">-->
+            <!--<button class="btn btn-outline-warning my-2 my-sm-0" id="btn-viz" onclick="getDataFromURL()" type="submit">View visualisation</button>-->
+            <!--<a class="nav-link" href="#" onclick="visualize()">View visualisation</a>-->
+            <!--        </li>-->
+            <!--    </ul>-->
 
-            </div>
-            <p class="blurb"><i>"This basic application demonstrates GET requests on the Discogs.com API to display JSON formatted responses."</i></p>
+            <!--</div>-->
+            <!--<p class="blurb"><i>"This basic application demonstrates GET requests on the Discogs.com API to display JSON formatted responses."</i></p>-->
         </nav>
     </header>
 
-    <section class="container-fluid">
+    <section class="container-fluid my-wrapper">
         <div class="row no-gutters">
-            <div class="col-sm-12 col-md-12 ">
+            <div class="col-sm-12 col-md-12">
                 <div id="dc-artist-data" class="float-left"></div>
                 <div id="dc-artist-details" class="float-left"></div>
             </div>
@@ -86,20 +80,23 @@
         <!--<button onclick="getURL()">Releases</button>-->
 
         <div class="row no-gutters">
-            <div class="col-sm-12 col-md-6 ">
+            <div class="col-sm-12 col-md-12 col-lg-6">
                 <div id="data"> </div>
             </div>
-             <div class="col-sm-12 col-md-6 ">  
-             <!--Frequency of audio format type over time-->
-                <div id="dataviz"><span>Type of audio format released per year</span></div>
-                   <div id="dataviz2" class="pie-slice">Type of audio format released</div>
-                   <div id="my_dataviz"></div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="row no-gutters">
+                        <div class="graph-title col-sm-12 col-md-12 col-xl-2 text-nowrap text-justify">
+                        <h6 class="text-center">Type of audio format released over time</h6>
+                    </div>
+                </div>
+                <div id="dataviz" class="float-left"></div>
+                <div id="dataviz2" class="pie-slice "></div>
             </div>
         </div>
     </section>
 
     <footer class="container-fluid">
-        <p class="inline-block">Developed by Neil Larkin ©2019</p>
+        <p class="inline-block text-center">Developed by Neil Larkin ©2019</p>
     </footer>
 
 </body>

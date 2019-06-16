@@ -79,8 +79,8 @@ function displayArtistDetails(details) {
         <h5>Members:</h5><ul>${membersHTML}</ul>
         <h5>Ex-Members:</h5> <ul>${exMembersHTML}</ul>
         <h5>Groups:</h5><ul>${groupsHTML}</ul>
-        <h5>Social:</h5> <ul class="list-social"><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-2x"></i></a></li>
-            <li><a target="_blank" href="${firstTwitURL}"><i class="fab fa-twitter-square fa-2x"></i><a></li>
+        <h5>Social:</h5> <ul class="list-social"><li><a target="_blank" href="${firstFbURL}"> <i class="fab fa-facebook-square fa-3x"></i></a></li>
+            <li><a target="_blank" href="${firstTwitURL}"><i class="fab fa-twitter-square fa-3x"></i><a></li>
       </ul>   `;
 }
 
@@ -90,8 +90,12 @@ function fetchDiscogsData(event) {
     $("#dc-artist-data").html("");
     $("#dc-artist-details").html("");
     $("#data").html("");
+    // $(".graph-title").html("");
     $("#dataviz").html("");
     $("#dataviz2").html("");
+
+
+
     var artist = $("#dc-artist-inputbox").val();
 
     if (!artist) {

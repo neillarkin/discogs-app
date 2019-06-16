@@ -118,7 +118,7 @@ function generateCharts(releases) {
         if (d.format === 'Optical') {
             console.log("Line Graph.  Format: " + d.format + " Year: " + d.year)
             console.log("Line Graph: " + Math.ceil((+d.year / 2) / 1000));
-            
+
             return Math.ceil((+d.year / 2) / 1000);
         }
         else {
@@ -146,12 +146,18 @@ function generateCharts(releases) {
         }
     });
 
+    var colorScale = d3.scale.ordinal().domain(["Vinyl", "Tape", "Optical", "MP3", "No data!"])
+        .range(['#436e7d', '#ffcd4d', '#4cc389', '#c1432e', '#dad9d6']);
+
+// tape '#ce9e62'
+
     var stackedChart = dc.barChart("#dataviz");
     stackedChart
-        .width(700)
-        .height(500)
+        .width(660)
+        .height(380)
         .dimension(year_dim)
         .transitionDuration(2000)
+        .colors(colorScale)
         .group(vinylPerYear, "Vinyl")
         .stack(tapePerYear, "Tape")
         .stack(opticalPerYear, "Optical")
@@ -159,24 +165,41 @@ function generateCharts(releases) {
         // .stack(noInfoPerYear, "No data!")
         .x(d3.scale.ordinal())
         .xUnits(dc.units.ordinal)
-        .xAxisLabel("Type of audio format released per year")
+        // .xAxisLabel("Type of audio format released per year")
         .yAxisLabel("No. of Releases", "15")
-        .legend(dc.legend().x(630).y(0).itemHeight(15).gap(5));
+        .legend(dc.legend().x(565).y(0).itemHeight(15).gap(5));
 
     stackedChart.margins().right = 100;
     stackedChart.margins().left = 60;
 
+    // stackedChart
+    //     .select("class", "x-axis-label")
+    //     .attr("transform", "translate(71, 100)");
 
-    // dc.renderAll();
+
+
+    // stackedChart.attr("transform", "translate(310,100")
+
+    // stackedChart.select('class', x-axis-label).attr('transform', 'translate(310,100)')
+
+
+
+
+    // var colorScale = d3.scale.ordinal().domain(["Vinyl", "Tape", "Optical", "MP3", "No data!"])
+        // .range(['rgb(31, 119, 180)', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(214, 39, 40)', '#fff']);
+
 
     var format_dim = ndx.dimension(dc.pluck('format'));
 
     var total_formats_per_set = format_dim.group().reduceCount(dc.pluck('year'))
-    
 
-    var colorScale = d3.scale.ordinal().domain(["Vinyl", "Tape", "Optical", "MP3", "No data!"])
-        .range(['rgb(31, 119, 180)', 'rgb(255, 127, 14)', 'rgb(44, 160, 44)', 'rgb(214, 39, 40)', '#fff']);
 
+
+
+// Deep rusted red: #c1432e
+// Silver head-dress: #4b6777
+// Rusted Gold: #ce9e62
+// Black for Contrast: #2c2c2c
 
     var pieChart = dc.pieChart('#dataviz2')
     pieChart
@@ -184,7 +207,7 @@ function generateCharts(releases) {
         .radius(270)
         .innerRadius(75)
         .externalLabels(0)
-        .transitionDuration(4000)
+        .transitionDuration(5000)
         .dimension(format_dim)
         .group(total_formats_per_set)
         .colors(colorScale)
@@ -195,10 +218,10 @@ function generateCharts(releases) {
 
     //   .legend(dc.legend().x(370).y(0).itemHeight(15).gap(5));
 
-// pieChart.  .attr('fill', function(d){ return(color(d.data.key)) })
-//   .attr("stroke", "black")
-//   .style("stroke-width", "2px")
-//   .style("opacity", 0.7)
+    // pieChart.  .attr('fill', function(d){ return(color(d.data.key)) })
+    //   .attr("stroke", "black")
+    //   .style("stroke-width", "2px")
+    //   .style("opacity", 0.7)
 
     // pieChart.colors(function(d) { return colorScale(d.fruitType); });
 
@@ -217,4 +240,3 @@ function generateCharts(releases) {
 
 
 // }
-
