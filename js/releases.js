@@ -42,8 +42,8 @@ function generatePaginationButtons(next, prev) {
         return `
         <div class="row no-gutters">
         <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-warning float-left" type="button" onclick="writeToDocument('${prev}')">Previous</button>
-            <button type="button" class="btn btn-warning float-right" type="button" onclick="writeToDocument('${next}')">Next</button>
+            <button type="button" class="btn btn-warning float-left" type="button" onclick="writeToDocument('${prev}')"><i class="fas fa-backward fa-2x"></i></button>
+            <button type="button" class="btn btn-warning float-right" type="button" onclick="writeToDocument('${next}')"><i class="fas fa-forward fa-2x"></i></button>
         </div>
        </div>
         `;
@@ -52,7 +52,7 @@ function generatePaginationButtons(next, prev) {
         return `
         <div class="row no-gutters">
         <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-warning float-right" type="button" onclick="writeToDocument('${next}')">Next</button>
+            <button type="button" class="btn btn-warning float-right" type="button" onclick="writeToDocument('${next}')"><i class="fas fa-forward fa-2x"></i></button>
         </div>
        </div>
         `;
@@ -61,7 +61,7 @@ function generatePaginationButtons(next, prev) {
         return `
         <div class="row no-gutters">
         <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-warning float-left" type="button" onclick="writeToDocument('${prev}')">Previous</button>
+            <button type="button" class="btn btn-warning float-left" type="button" onclick="writeToDocument('${prev}')"><i class="fas fa-backward fa-2x"></i></button>
         </div>
        </div>
         `;

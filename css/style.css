@@ -8,13 +8,13 @@
 /***********************************************************************General settings*/
 body {
     background-color:#fff;
-  zoom: 100%;
+  zoom: 80%;
   font-family: Montserrat, Frijole, cursive, sans-serif;
   font-weight: 500;
   font-size: 16px;
 }
 nav{
-    border-bottom: 3px solid #ffc107;
+    border-bottom: 4px solid #ffc107;
 }
 .my-wrapper{
     /*margin-top:5px;*/
@@ -97,6 +97,8 @@ table {
     margin-left:100px;
 }
 #dataviz {
+    /*background-color:  #fbfcfc;*/
+
   /*   border-width: 3px 4px 3px 5px;*/
   /*border-radius:95% 4% 92% 5%/4% 95% 6% 95%;*/
   /*transform: rotate(2deg);*/
@@ -109,7 +111,7 @@ table {
 }
 
 #dataviz2 {
-    
+    /*background-color:  #fbfcfc;*/
     
     /*margin-top: -50px;*/
     margin-left: 200px;
