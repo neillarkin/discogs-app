@@ -14,13 +14,13 @@ It is expected that the employer will only spend a few moments using the applica
 
 Wireframe:https://github.com/neillarkin/discogs-app/blob/master/wireframe/discogs.app.wireframe.JPG 
 
-##Features
+## Features
 The application has three main features: it allows a user to: Search for an artist; See a list of that artists releases; Visualise the audio format of those releases over time.
 The layout is kept simple with one search box being the primary method of interaction. Users simply type the name of an artist and click the search button. The artist results immediately appear, with information such as an image, profile, members and social links. 
 A paginated table of music releases by the artist is formatted to display specific columns of data describing each album release such as name, title, year etc. Each table of 50 items can be browsed by clicking ‘Next’ and ‘Previous’ buttons.
 Two visualisations correspond to the currently displayed table of rows. The visualisations update as the user browses through the tables. A basic line graph and pie chart attempt to visualise the popularity in audio formats over time. Starting with analogue and progressing to digital formats. Each visualisation has some basic interactivity provided by the DC.js framework.
 
-##Features to implement
+## Features to implement
 - The home page or landing page is currently blank and is set to default to a search for Nirvana. The home page could be set to display and array of album covers.
 It may be possible to make the SVGs responsive. This would require some more research.
 - The searchbox should accept a key press on the ‘Enter’ key to perform a search.
@@ -37,7 +37,7 @@ Boostrap 4.3, HTML5 – for semantics and responsiveness
 ## Use case scenarios
 The target use for this application is potential employers. A working version of the application will be displayed on my portfolio website along with the source code. The application will be used as part of an interview pitch to convey my knowledge of working with an API and other related technologies. 
 
-##Formatting the JSON objects
+### Formatting the JSON objects
 The Discogs.com public API returned and array called ‘results’ that contained objects of data in JSON. This object contained a property that was used to retrieve the artists album releases and place them into a table.
 A problem was that each object was often different. Some objects keys had empty properties. To fix this, each object was lopped through and a new object created with missing keys replaced with properties such as ‘No data!’, ‘No Label’, and ‘No Year’. 
 The data had to be cleaned further before generating the visualisations. Each objects was looped through and its ‘format’ property was compared to arrays of items used by the Discogs data. The include() function was used to compare and replace the property with either, Vinyl, Tape, Optical, MP3 or No Data. This made it easier for the Crossfilter reduceSum() functions to visualise the data.
