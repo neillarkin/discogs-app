@@ -14,7 +14,7 @@ It is expected that the employer will only spend a few moments using the applica
 
 Wireframe:https://github.com/neillarkin/discogs-app/blob/master/wireframe/discogs.app.wireframe.JPG 
 
-#### Use case scenarios
+### Use case scenarios
 The target use for this application is potential employers. A working version of the application will be displayed on my portfolio website along with the source code. The application will be used as part of an interview pitch to convey my knowledge of working with an API and other related technologies. 
 
 ## Features
@@ -50,7 +50,20 @@ Test-driven development was implemented with the Jasmine testing framework. The 
 
 Other tests performed were against the main.js file and its errorResponses for 405, 500 and other statues codes. The web resource https://httpstat.us was inserted in to the getJSON request to help manually test if each of the status code responses were functioning correctly.
 
-Manual testing was performed with Chrome on Windows and Safari on iOS. The test case was simple; A user would perform a search then browse the table using the buttons. The data within the table rows was checked to see if it corresponded with the visualisations. The visualisations were then interacted with to see if any cosmetic errors occurred. Non-existing artists were also search for to see if the appropriate message was displayed.
+Manual testing was performed with Chrome on Windows, Chrome on Android, and Safari on iOS. The test cases were as below:
+1) Type an artist name in to the search box and press the Search button.
+	Verify Artist details appear.
+	Verify artist releases appear table.
+	Verify the Next and Previous buttons function.
+	Verify the visualisations appear.
+	Verify the the ‘format’ and ‘year’ table information match that of both 		visualisations.
+	Verify the visualisations are interactive.
+2) Type a non-existent artist name in to the search box and press the Search button.
+	Verify that a message appears informing the user there is no artist.
+3) Perform steps 1 and 2 with Safari on iOS
+4) Perform steps 1 and 2 with Chrome on Android
+
+ A user would perform a search then browse the table using the buttons. The data within the table rows was checked to see if it corresponded with the visualisations. The visualisations were then interacted with to see if any cosmetic errors occurred. Non-existing artists were also search for to see if the appropriate message was displayed.
 
 ### Bugs/Issues
 1) The Discogs JSON response of paginated data, appears to go beyond the list of album releases for a particular artist; resulting in later paginations being unrelated to the original search. This is something that could be rectified by generating a new array of data that contains records that only included artist values that correspond to given string values.
@@ -60,11 +73,11 @@ Manual testing was performed with Chrome on Windows and Safari on iOS. The test 
 5) The 'Next' button often becomes misaligned with large pages.
 6) The table is slightly too large on smart phones.
 
-#### Deployment
+### Deployment
 The sites was built on the Cloud9 IDE with GitHub used to backup milestones in development. The latest version is hosted on GitHub Pages ans is available here:
 https://neillarkin.github.io/discogs-app/
 
-##### Credits and Sources
+#### Credits and Sources
 
 - Visualisation.js Lines 11-17 – function to check 
 https://stackoverflow.com/questions/37896484/multiple-conditions-for-javascript-includes-method 
