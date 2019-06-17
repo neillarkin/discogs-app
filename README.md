@@ -1,12 +1,12 @@
 # Milestone Project 2 – Interactive Frontend Development.
-# Discogs demo web app
+# Discogs demo web application
 
 ## Overview
 This web app is a simple demonstration of manipulating the a public API to display tables of data with corresponding visualisations. The chosen API is that of Discogs.com, a website that catalogues music releases. 
 A primary goal of the project was to try and use data that was not stored locally, instead retrieved form an external server.
 
 The project is currently hosted on GitHub Pages and is available here: 
-https://github.com/neillarkin/discogs-app
+https://neillarkin.github.io/discogs-app/
 
 ## UX Design overview
 The primary target user of the application a potential employer where it would be used to showcase my some of my knowledge of using APIs, JSON JS2015 and D3/DC.js
@@ -28,7 +28,7 @@ The data had to be cleaned further before generating the visualisations. Each ob
 
 
 ## Testing
-Test-driven development was implemented with the Jasmine testing framework. The recordSpec.js file runs two tests again the response XMLHttpRequest getData() function in the releases.js file. The first test simply verifies that an object has been returned. The second test checks the type of value for the ‘artist’ property of that object; checking if it is a string. A problem with this test was the Jasmine Describe functions were running before the getData() function was complete. A workaround was to implement a Timeout of 2000 ms inside the second Describe function. 
+Test-driven development was implemented with the Jasmine testing framework. The recordSpec.js file runs two tests again the response XMLHttpRequest getData() function in the releases.js file. The first test simply verifies that an object has been returned. The second test checks the value for the ‘artist’ property of that object. A problem with this test was the Jasmine Describe functions were running before the getData() function was complete. A workaround was to implement a Timeout of 2000 ms inside the second Describe function. 
 Other tests performed were against the main.js file and its errorResponses for 405, 500 and other statues codes. The web resource https://httpstat.us was inserted in to the getJSON request to help manually test if each of the status code responses were functioning correctly.
 
 
@@ -37,11 +37,18 @@ Other tests performed were against the main.js file and its errorResponses for 4
 2) Responsivity is significantly affected by the visualisations. This is mentioned in the project brief. Some sources on the web describe workarounds for manipulating the SVG to make it responsive. This is something that could be implemented in a future update to the application.
 3) The social media links are not 100% accurate; simple concatenating the artist name to both the Facebook and Twitter URLs. It works more popular artists.
 4) Hitting enter on the searchbox does not not perform a search. This could be implemented in a future update.
-
+5) The 'Next' button often becomes misaligned with large pages.
+6) The table is slighly too large on smart phones.
 
 #### Deployment
+The sites was built on the Cloud9 IDE with GitHub used to backup milestones in development. The latest version is hosted on GitHub Pages ans is available here:
+https://neillarkin.github.io/discogs-app/
 
 ##### Credits and Sources
 
+- Visualisation.js Lines 11-17 – function to check 
+https://stackoverflow.com/questions/37896484/multiple-conditions-for-javascript-includes-method 
 
-##### Acknowledgements
+- Lessons in Interactive Frontend Development
+
+- Discogs API: www.discogs.com/developers/

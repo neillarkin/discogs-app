@@ -1,9 +1,10 @@
-function getData(url, cb) {
+//generic function to retirive data using a releases_url & a callback from writeToDocument()
+function getData(url, callback) {
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            cb(JSON.parse(this.responseText));
+            callback(JSON.parse(this.responseText));
         }
         else if (this.status === 404) {
             $("#dc-artist-data").html(
@@ -15,17 +16,15 @@ function getData(url, cb) {
     xhr.send();
 }
 
+//pass the releases_url for generating table
 function getURL() {
     writeToDocument(releases_url);
 }
 
+//generate table headers
 function getTableHeaders(obj) {
     var tableHeaders = [];
-
-    // console.log(obj);
-
     Object.keys(obj).forEach(function(key) {
-        // obj.thumb=="#";
         if (key == "thumb") {
             tableHeaders.push(`<th></th>`);
         }
@@ -33,10 +32,10 @@ function getTableHeaders(obj) {
             tableHeaders.push(`<th>${key}</th>`);
         }
     });
-
     return `<thead><tr class="text-uppercase">${tableHeaders}</tr></thead>`;
 }
 
+//generate pagination buttons
 function generatePaginationButtons(next, prev) {
     if (next && prev) {
         return `
@@ -68,6 +67,7 @@ function generatePaginationButtons(next, prev) {
     }
 }
 
+//Record constructor
 function Record(thumb, artist, title, year, format, label) {
     this.thumb = thumb;
     this.artist = artist;
@@ -79,7 +79,6 @@ function Record(thumb, artist, title, year, format, label) {
 
 
 function writeToDocument(url) {
-
     var tableRows = [];
     var cleanData = [{}];
     var el = document.getElementById("data");
@@ -92,9 +91,8 @@ function writeToDocument(url) {
             pagination = generatePaginationButtons(pagData.next, pagData.prev);
         }
 
+        //create a new cleaned JSON object to replace the missing parmenters on original retrieved object
         data = data.releases;
-        // console.log(data)
-        // console.log(data[0].artist);
         data.forEach(function(record) {
             var rec = new Record(record.thumb, record.artist, record.title, record.year, record.format, record.label);
 
@@ -103,7 +101,6 @@ function writeToDocument(url) {
             }
 
             if (rec.format === undefined) {
-
                 rec.format = "No data!";
             }
 
@@ -113,11 +110,8 @@ function writeToDocument(url) {
             if (rec.year === undefined) {
                 rec.year = "No year";
             }
-
-            // console.log(cleanData)
+            //push each new object in to an array
             cleanData.push(rec);
-
-
         });
 
         cleanData.forEach(function(Record) {
@@ -130,9 +124,9 @@ function writeToDocument(url) {
             tableRows.push(`<tr>${dataRow}</tr>`);
         });
         var tableHeaders = getTableHeaders(cleanData[1]);
-        // getDataFromURL()
 
         el.innerHTML = `${pagination}<table class="table-light table-striped" id="table-releases">${tableHeaders}${tableRows}</table>`.replace(/,/g, "");
+        //pass the new object to visualization.js for more cleaning 
         cleanFormatItems(data);
     });
 

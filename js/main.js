@@ -1,5 +1,6 @@
 var releases_url;
 
+//display artist name and image
 function displayArtistInfo(artistData) {
     return `
       <img src="${artistData.thumb}" width="120" height="120" />
@@ -7,7 +8,7 @@ function displayArtistInfo(artistData) {
         `;
 }
 
-
+//display artist profile, name variations, members etc.
 function displayArtistDetails(details) {
     var members = [{}];
     var groups = [{}];
@@ -15,6 +16,8 @@ function displayArtistDetails(details) {
     var membersHTML = [];
     var groupsHTML = [];
 
+
+    //display member(s) of the group.
     if (details.members) {
         members = details.members;
         members.forEach(function(key) {
@@ -48,13 +51,8 @@ function displayArtistDetails(details) {
         groupsHTML.push(`<li>&nbspNone</li>`);
     }
 
+    //create social media links
     var social = details.urls;
-    // if (members.length == 0) {
-    //     return `<div class="clearfix members-list">No members list!</div>`;
-    // }
-
-
-
     var fbURLs = [];
     var twitURLs = [];
 
@@ -84,7 +82,7 @@ function displayArtistDetails(details) {
       </ul>   `;
 }
 
-
+//get artist name and artist details
 function fetchDiscogsData(event) {
 
     $("#dc-artist-data").html("");
@@ -94,8 +92,6 @@ function fetchDiscogsData(event) {
     $("#dataviz").html("");
     $("#dataviz2").html("");
 
-
-
     var artist = $("#dc-artist-inputbox").val();
 
     if (!artist) {
@@ -103,12 +99,12 @@ function fetchDiscogsData(event) {
         return;
     }
 
-    // $("#dc-artist-data").html(`<div id="loader"><img src="imgs/loader.gif" alt="loading..." /></div>`);
-
     $("#dc-artist-details").html(`<div class="text-center text-primary style="width: 6rem; height: 6rem;><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>`);
 
-    // $.when($.getJSON(`https://httpstat.us/429`),
-    // $.when($.getJSON(`https://httpstat.us/429`), ).then(
+    // $.when($.getJSON(`https://httpstat.us/429`)  For Testing status codes
+
+    //get artist data and then use one of its propetties(resource_url) to get the artists album releases
+
     $.when($.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`), ).then(
         function(response) {
             // console.log(response)
@@ -125,9 +121,10 @@ function fetchDiscogsData(event) {
             $.when($.getJSON(artistURL)).then(
                 function(response2) {
                     var artistDetails = response2;
-                    releases_url = response2.releases_url
+                    releases_url = response2.releases_url //store the releases_url for table later
                     $("#dc-artist-details").html(displayArtistDetails(artistDetails));
-                    getURL();
+
+                    getURL(); //used to retirve the artist album releases for table in releases.js
                 }
             );
         },
