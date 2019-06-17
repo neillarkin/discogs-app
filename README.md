@@ -14,6 +14,9 @@ It is expected that the employer will only spend a few moments using the applica
 
 Wireframe:https://github.com/neillarkin/discogs-app/blob/master/wireframe/discogs.app.wireframe.JPG 
 
+#### Use case scenarios
+The target use for this application is potential employers. A working version of the application will be displayed on my portfolio website along with the source code. The application will be used as part of an interview pitch to convey my knowledge of working with an API and other related technologies. 
+
 ## Features
 The application has three main features: it allows a user to: Search for an artist; See a list of that artists releases; Visualise the audio format of those releases over time.
 The layout is kept simple with one search box being the primary method of interaction. Users simply type the name of an artist and click the search button. The artist results immediately appear, with information such as an image, profile, members and social links. 
@@ -34,8 +37,7 @@ DC.js 2.1 – used on top of D3 to generate both graphs
 Crossfilter 1.3 – used for creating dimensions from data selections
 Boostrap 4.3, HTML5 – for semantics and responsiveness
 
-## Use case scenarios
-The target use for this application is potential employers. A working version of the application will be displayed on my portfolio website along with the source code. The application will be used as part of an interview pitch to convey my knowledge of working with an API and other related technologies. 
+
 
 ### Formatting the JSON objects
 The Discogs.com public API returned and array called ‘results’ that contained objects of data in JSON. This object contained a property that was used to retrieve the artists album releases and place them into a table.
