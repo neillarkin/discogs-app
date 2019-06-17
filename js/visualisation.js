@@ -1,13 +1,13 @@
 //loop through the each record objects 'format' property
 //Then group each objects in to either Vinyl, Tape, Optical, MP3/streaming or No Info!
-function cleanFormatItems(releases) {
+function cleanFormatItems(releases){
 
     var conditions_vinyl = ['6', '7', '10', '12', 'LP', '2xLP', 'xLP', 'Flexi', 'Flexi-disc', 'Acetate'];
     var conditions_tape = ['Cass', '4-Trk', '8-Trk', 'VHS', 'Betacam', 'Mixtape', 'DCC', 'DAT', 'Reel'];
     var conditions_optical = ['CD', 'CDr', 'VCD', 'SACD', 'DVD', 'DVD-V', 'Minimax', 'Laserdisc', '2xCD'];
     var conditions_streaming = ['MP2', 'MP3', 'WMA', 'WAV', 'FLAC', 'ogg', 'MP3Sur', 'MPEG', 'DFF', 'DSF', 'AMR', 'ALAC', 'AAC', 'AIFC', 'AIFF', 'APE'];
 
-    releases.forEach(function(record, format) {
+    releases.forEach(function(record, format){
         //use th einclude() function to replace replace the 'format'  key values.
         // https://stackoverflow.com/questions/37896484/multiple-conditions-for-javascript-includes-method
         function contains(target, pattern) {
@@ -15,10 +15,10 @@ function cleanFormatItems(releases) {
             pattern.forEach(function(word) {
                 value = value + target.includes(word);
             });
-            return (value === 1)
+            return (value === 1);
         }   
 
-        switch (true) {
+        switch (true){
             case record.format === undefined:
                 return record.format = "No data!";
 
@@ -45,13 +45,13 @@ function cleanFormatItems(releases) {
 //generate a bar and a pie chart.
 //the bar chart uses reduceSum with somecleaning on the returned data.
 //the pie chart using reduceCount 
-function generateCharts(releases) {
+function generateCharts(releases){
 
     var ndx = crossfilter(releases);
 
     var year_dim = ndx.dimension(dc.pluck('year'));
 
-    var vinylPerYear = year_dim.group().reduceSum(function(d) {
+    var vinylPerYear = year_dim.group().reduceSum(function(d){
         if (d.format === 'Vinyl') {
             return Math.ceil((+d.year / 2) / 1000);
         }
@@ -60,7 +60,7 @@ function generateCharts(releases) {
         }
     });
 
-    var tapePerYear = year_dim.group().reduceSum(function(d) {
+    var tapePerYear = year_dim.group().reduceSum(function(d){
         if (d.format === 'Tape') {
             return Math.ceil((+d.year / 2) / 1000);
         }
@@ -69,7 +69,7 @@ function generateCharts(releases) {
         }
     });
 
-    var opticalPerYear = year_dim.group().reduceSum(function(d) {
+    var opticalPerYear = year_dim.group().reduceSum(function(d){
         if (d.format === 'Optical') {
             return Math.ceil((+d.year / 2) / 1000);
         }
@@ -78,7 +78,7 @@ function generateCharts(releases) {
         }
     });
 
-    var streamPerYear = year_dim.group().reduceSum(function(d) {
+    var streamPerYear = year_dim.group().reduceSum(function(d){
         if (d.format === 'MP3') {
             return Math.ceil((+d.year / 2) / 1000);
         }
@@ -87,7 +87,7 @@ function generateCharts(releases) {
         }
     });
 
-    var noInfoPerYear = year_dim.group().reduceSum(function(d) {
+    var noInfoPerYear = year_dim.group().reduceSum(function(d){
         if (d.format === 'No data!') {
             return Math.ceil((+d.year / 2) / 1000);
         }
@@ -123,7 +123,7 @@ function generateCharts(releases) {
     var format_dim = ndx.dimension(dc.pluck('format'));
     var total_formats_per_set = format_dim.group().reduceCount(dc.pluck('year'))
 
-    var pieChart = dc.pieChart('#dataviz2')
+    var pieChart = dc.pieChart('#dataviz2');
     pieChart
         .height(330)
         .radius(270)

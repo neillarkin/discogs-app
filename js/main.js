@@ -1,7 +1,7 @@
 var releases_url;
 
 //display artist name and image
-function displayArtistInfo(artistData) {
+function displayArtistInfo(artistData){
     return `
       <img src="${artistData.thumb}" width="120" height="120" />
       <h2>${artistData.title}</h2>
@@ -18,7 +18,7 @@ function displayArtistDetails(details) {
 
 
     //display member(s) of the group.
-    if (details.members) {
+    if (details.members){
         members = details.members;
         members.forEach(function(key) {
             if (key.active) {
@@ -33,7 +33,7 @@ function displayArtistDetails(details) {
             }
         });
     }
-    if (details.groups) {
+    if (details.groups){
         membersHTML.push(`<li>&nbsp${details.realname}</li>`);
         groups = details.groups;
         groups.forEach(function(key) {
@@ -60,13 +60,13 @@ function displayArtistDetails(details) {
         if (key.indexOf("facebook.com") > -1) {
             fbURLs.push(key);
         }
-    })
+    });
 
     social.forEach(function(key) {
         if (key.indexOf("twitter.com") > -1) {
             twitURLs.push(key);
         }
-    })
+    });
 
     var firstFbURL = fbURLs.shift();
     var firstTwitURL = twitURLs.shift();
@@ -106,7 +106,7 @@ function fetchDiscogsData(event) {
     //get artist data and then use one of its propetties(resource_url) to get the artists album releases
 
     $.when($.getJSON(`https://api.discogs.com/database/search?type=artist&q=${artist}&token=nBvZlBkjrlXGhxDUpVYiOKeRNHUdsBYffuasXHox`), ).then(
-        function(response) {
+        function(response){
             // console.log(response)
             if (!Array.isArray(response.results) || !response.results.length) {
                 $("#dc-artist-data").html(
@@ -128,16 +128,13 @@ function fetchDiscogsData(event) {
                 }
             );
         },
-        function(errorResponse) {
+        function(errorResponse){
             if (errorResponse.status === 404 || errorResponse.status === 500) {
-                console.log("error 404 or 500")
                 $("#dc-artist-data").html(
                     `<h3>No info found for the artist ${artist}</h3>`);
             }
             else if (errorResponse.status === 429 || errorResponse.status === 403) {
-                console.log("error 429 or 403")
                 var resetTime = new Date(errorResponse.getResponseHeader('X-RateLimit-Remaining') * 1000);
-                console.log(resetTime)
                 $("#dc-artist-data").html(`<h5>Too many requests, please wait until ${resetTime.toLocaleTimeString()}</h5>`);
             }
             else {

@@ -1,24 +1,24 @@
-const testURL = "https://api.discogs.com/artists/125246/releases"
+const testURL = "https://api.discogs.com/artists/125246/releases";
 const artist_Test_Name = "Nirvana";
-var myArray = []
+var myArray = [];
+
+//******** REFRESH THE BROWSER PAGE IF THE SECOND SPEC  FAILS *********** 
 
 
 //get the JSOn data from the releases.js getData() function
 function createArray(url) {
     getData(url, function(data) {
         myArray = data.releases;
-        console.log(url);
         myArray.forEach(function(record) {
             myArray.push(record);
-         })
-    })
+         });
+    });
 }
 
 
 describe("Test Releases Object", function() {
-
     beforeEach(function() {
-        createArray(testURL)
+        createArray(testURL);
         var name;
     });
 
@@ -28,7 +28,7 @@ describe("Test Releases Object", function() {
             expect(typeof myArray).toBe("object");
 
         });
-    })
+    });
 
     describe("Check if arrays 'artist' value is: " + artist_Test_Name, function() {
         it("Should return " + artist_Test_Name, function() {
@@ -37,9 +37,9 @@ describe("Test Releases Object", function() {
             //the test simply checks if the first array object artist property is equal to Nirvana 
             setTimeout(function() {
                 name = myArray[0].artist;
-            }, 2000)
+            }, 2000);
 
             expect(name).toBe(artist_Test_Name);
         });
-    })
+    });
 });

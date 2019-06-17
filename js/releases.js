@@ -1,5 +1,5 @@
 //generic function to retirive data using a releases_url & a callback from writeToDocument()
-function getData(url, callback) {
+function getData(url, callback){
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
@@ -17,12 +17,12 @@ function getData(url, callback) {
 }
 
 //pass the releases_url for generating table
-function getURL() {
+function getURL(){
     writeToDocument(releases_url);
 }
 
 //generate table headers
-function getTableHeaders(obj) {
+function getTableHeaders(obj){
     var tableHeaders = [];
     Object.keys(obj).forEach(function(key) {
         if (key == "thumb") {
@@ -36,7 +36,7 @@ function getTableHeaders(obj) {
 }
 
 //generate pagination buttons
-function generatePaginationButtons(next, prev) {
+function generatePaginationButtons(next, prev){
     if (next && prev) {
         return `
         <div class="row no-gutters">
@@ -68,7 +68,7 @@ function generatePaginationButtons(next, prev) {
 }
 
 //Record constructor
-function Record(thumb, artist, title, year, format, label) {
+function Record(thumb, artist, title, year, format, label){
     this.thumb = thumb;
     this.artist = artist;
     this.title = title;
@@ -78,7 +78,7 @@ function Record(thumb, artist, title, year, format, label) {
 }
 
 
-function writeToDocument(url) {
+function writeToDocument(url){
     var tableRows = [];
     var cleanData = [{}];
     var el = document.getElementById("data");
