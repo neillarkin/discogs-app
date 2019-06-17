@@ -8,15 +8,31 @@ A primary goal of the project was to try and use data that was not stored locall
 The project is currently hosted on GitHub Pages and is available here: 
 https://neillarkin.github.io/discogs-app/
 
-## UX Design overview
-The primary target user of the application a potential employer where it would be used to showcase my some of my knowledge of using APIs, JSON JS2015 and D3/DC.js
+## UX
+The target user of the application is a potential employer. The application will be used to showcase some of my knowledge of using APIs, JSON JS2015 and D3/DC.js.
+It is expected that the employer will only spend a few moments using the application and so it should appear simple and visually appealing. The UI is clean and responsive with no major functional bugs that would give a poor user experience. 
+
+Wireframe:https://github.com/neillarkin/discogs-app/blob/master/wireframe/discogs.app.wireframe.JPG 
+
+##Features
 The application has three main features: it allows a user to: Search for an artist; See a list of that artists releases; Visualise the audio format of those releases over time.
 The layout is kept simple with one search box being the primary method of interaction. Users simply type the name of an artist and click the search button. The artist results immediately appear, with information such as an image, profile, members and social links. 
 A paginated table of music releases by the artist is formatted to display specific columns of data describing each album release such as name, title, year etc. Each table of 50 items can be browsed by clicking ‘Next’ and ‘Previous’ buttons.
 Two visualisations correspond to the currently displayed table of rows. The visualisations update as the user browses through the tables. A basic line graph and pie chart attempt to visualise the popularity in audio formats over time. Starting with analogue and progressing to digital formats. Each visualisation has some basic interactivity provided by the DC.js framework.
 
+##Features to implement
+- The home page or landing page is currently blank and is set to default to a search for Nirvana. The home page could be set to display and array of album covers.
+It may be possible to make the SVGs responsive. This would require some more research.
+- The searchbox should accept a key press on the ‘Enter’ key to perform a search.
+- Some of the items in the table rows could be hyperlinked to launch Boostrap modals.
+- The top-half of the web page could do with some cosmetic improvemnets.
+
 ## Technologies
-JavaScript ES6, Jquery 3.4, DC.js 2.1, Crossfilter 1.3,  Boostrap 4.3, HTML5
+JavaScript ES6/2015 – used for the Promise functions.
+Jquery 3.4 – used div selecting and Promise functions 
+DC.js 2.1 – used on top of D3 to generate both graphs
+Crossfilter 1.3 – used for creating dimensions from data selections
+Boostrap 4.3, HTML5 – for semantics and responsiveness
 
 ## Use case scenarios
 The target use for this application is potential employers. A working version of the application will be displayed on my portfolio website along with the source code. The application will be used as part of an interview pitch to convey my knowledge of working with an API and other related technologies. 
@@ -29,8 +45,10 @@ The data had to be cleaned further before generating the visualisations. Each ob
 
 ## Testing
 Test-driven development was implemented with the Jasmine testing framework. The recordSpec.js file runs two tests again the response XMLHttpRequest getData() function in the releases.js file. The first test simply verifies that an object has been returned. The second test checks the value for the ‘artist’ property of that object. A problem with this test was the Jasmine Describe functions were running before the getData() function was complete. A workaround was to implement a Timeout of 2000 ms inside the second Describe function. 
+
 Other tests performed were against the main.js file and its errorResponses for 405, 500 and other statues codes. The web resource https://httpstat.us was inserted in to the getJSON request to help manually test if each of the status code responses were functioning correctly.
 
+Manual testing was performed with Chrome on Windows and Safari on iOS. The test case was simple; A user would perform a search then browse the table using the buttons. The data within the table rows was checked to see if it corresponded with the visualisations. The visualisations were then interacted with to see if any cosmetic errors occurred. Non-existing artists were also search for to see if the appropriate message was displayed.
 
 ### Bugs/Issues
 1) The Discogs JSON response of paginated data, appears to go beyond the list of album releases for a particular artist; resulting in later paginations being unrelated to the original search. This is something that could be rectified by generating a new array of data that contains records that only included artist values that correspond to given string values.
@@ -38,7 +56,7 @@ Other tests performed were against the main.js file and its errorResponses for 4
 3) The social media links are not 100% accurate; simple concatenating the artist name to both the Facebook and Twitter URLs. It works more popular artists.
 4) Hitting enter on the searchbox does not not perform a search. This could be implemented in a future update.
 5) The 'Next' button often becomes misaligned with large pages.
-6) The table is slighly too large on smart phones.
+6) The table is slightly too large on smart phones.
 
 #### Deployment
 The sites was built on the Cloud9 IDE with GitHub used to backup milestones in development. The latest version is hosted on GitHub Pages ans is available here:
